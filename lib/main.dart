@@ -1,11 +1,14 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tell_me_news/controller/app_settings_controller.dart';
+import 'package:tell_me_news/view/pages/login_singup_page.dart';
+import 'package:tell_me_news/view/pages/news_main_page.dart';
+
 import 'package:tell_me_news/view/pages/splash_screen.dart';
-import 'package:unicons/unicons.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      themeMode: Get.rootController.themeMode??ThemeMode.dark,
       theme: FlexThemeData.light(
         scheme: scheme,
         appBarElevation: 0.5,
@@ -27,7 +31,21 @@ class MyApp extends StatelessWidget {
         scheme: scheme,
         appBarElevation: 2,
       ),
-      home: const SplashScreen(),
+      getPages: [
+        GetPage(name: '/splash', page: () => const SplashScreen()),
+        GetPage(
+          name: '/homepage',
+          page: () => const NewsMainPage(),
+        ),
+        GetPage(
+          name: '/login_reg',
+          page: () => const UserLoginRegistrationPage(),
+          transition: Transition.zoom,
+          transitionDuration: const Duration(milliseconds: 1700),
+          curve: Curves.easeInOutCubicEmphasized,
+        ),
+      ],
+      initialRoute: '/splash',
     );
   }
 }

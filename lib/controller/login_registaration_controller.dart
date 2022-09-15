@@ -1,24 +1,40 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tell_me_news/view/widgets/login_widget.dart';
-import 'package:tell_me_news/view/widgets/singup_widget.dart';
 
 class LoginRegistrationController extends GetxController {
   RxString title = 'login'.obs;
+  Rx<Color> loginButtonColor = Colors.blueGrey.shade900.obs;
+  Rx<Color> singupButtonColor = Colors.grey.shade900.obs;
 
-  Widget bodyWidget = const LoginWidget();
-
-  void changeBodyWidget() {
-    if (title.value == 'login') {
-      title.value = 'singup';
-      bodyWidget = const SingupWidget();
-      update();
-    } else {
+  PageController pageController = PageController();
+  changePageTitle() {
+    if (pageController.page == 0) {
       title.value = 'login';
-      bodyWidget = const LoginWidget();
-      update();
+    } else {
+      title.value = 'singup';
     }
   }
+
+  changePageColor() {
+    if (page == 0) {
+      loginButtonColor.value = Colors.blueGrey.shade900;
+      singupButtonColor.value = Colors.grey.shade900;
+    } else {
+      singupButtonColor.value = Colors.blueGrey.shade900;
+      loginButtonColor.value = Colors.grey.shade900;
+    }
+  }
+
+  changePage(int pg) {
+    pageController.animateTo(
+      pg.toDouble(),
+      duration: const Duration(milliseconds: 1300),
+      curve: Curves.bounceInOut,
+    );
+    update();
+  }
+
+  double get page => pageController.page!;
 }
 
 class LoginWidgetController extends GetxController {}
