@@ -17,13 +17,13 @@ class NewsMainPage extends StatelessWidget {
         builder: (ctrl) {
           return ZoomDrawer(
             controller: ctrl.zoomDrawerController,
-            menuBackgroundColor: Colors.blueGrey.shade900,
+            menuBackgroundColor: context.theme.backgroundColor,
             borderRadius: 40.0,
             overlayBlend: BlendMode.lighten,
             showShadow: true,
             angle: -10.0,
             slideWidth: MediaQuery.of(context).size.width * 0.78,
-            menuScreen: const DrawerWidget(),
+            menuScreen: DrawerWidget(),
             mainScreen: const NewsDisplayer(),
           );
         });

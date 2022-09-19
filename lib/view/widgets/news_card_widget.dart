@@ -45,7 +45,7 @@ class NewsCardWidget extends StatelessWidget {
       image: Image(
         image: (imageUrl != '')
             ? NetworkImage(imageUrl)
-            : Image.asset('assets/images/background.png').image,
+            : Image.asset('assets/images/placeholder.png').image,
         fit: BoxFit.contain,
         height: MediaQuery.of(context).size.height * .29,
       ),

@@ -8,6 +8,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isDarkVal = Get.isDarkMode;
     return GetBuilder<AppDarwerController>(
         tag: "drawer_ctrl",
         builder: (c) {
@@ -69,11 +70,14 @@ class DrawerWidget extends StatelessWidget {
                       size: 38,
                       color: Get.rootController.theme?.primaryColor,
                     ),
-                    value: Get.rootController.isDarkMode,
+                    value: isDarkVal,
                     onChanged: (val) {
+                      Get.changeThemeMode(
+                        val == true ? ThemeMode.dark : ThemeMode.light,
+                      );
                       setter(
                         () {
-                          Get.rootController.reverseTheme();
+                          isDarkVal = val;
                         },
                       );
                     },
@@ -82,7 +86,7 @@ class DrawerWidget extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  "Change Language",
+                  "App Language",
                   style: GoogleFonts.righteous(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -90,19 +94,6 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 leading: const Icon(
                   Icons.g_translate,
-                  size: 36,
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  "Change Country",
-                  style: GoogleFonts.righteous(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
-                leading: const Icon(
-                  Icons.public,
                   size: 36,
                 ),
               ),
@@ -153,16 +144,5 @@ class DrawerWidget extends StatelessWidget {
             ],
           );
         });
-  }
-}
-
-extension ChangeMode on GetMaterialController {
-  void reverseTheme() {
-    themeMode = themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-    update();
-  }
-
-  bool get isDarkMode {
-    return themeMode == ThemeMode.dark;
   }
 }

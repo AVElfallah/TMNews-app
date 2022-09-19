@@ -182,7 +182,10 @@ class _SingupWidgetState extends State<SingupWidget> {
                                   constraints: constraints,
                                   hintText: 'Input your password',
                                   label: Text(
-                                    'Password Confirmation',
+                                    'Confirmation',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.visible,
                                     style: GoogleFonts.righteous(
                                       fontSize: 20,
                                     ),

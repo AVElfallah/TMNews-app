@@ -34,9 +34,10 @@ dependencies:
   google_fonts: ^3.0.1
   getwidget: ^3.0.1
   flex_color_scheme:
-  curved_navigation_bar: ^1.0.3
+  google_nav_bar: ^5.0.6
   shared_preferences: ^2.0.15
   flutter_zoom_drawer: ^3.0.3
+  country_pickers: ^2.0.0
   dio: ^4.0.6
   cupertino_icons: ^1.0.2
 
