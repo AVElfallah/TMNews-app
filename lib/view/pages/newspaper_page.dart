@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:getwidget/components/card/gf_card.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
+
+import 'package:getwidget/getwidget.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
-import 'package:tell_me_news/model/news_enums.dart';
-import 'package:tell_me_news/repository/news_repository.dart';
+
 import 'package:tell_me_news/view/widgets/news_filter_widget.dart';
 
 import '../../controller/darwer_controller.dart';
@@ -64,11 +62,7 @@ class NewsPaperPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: FutureBuilder(
-                    future: GetNews(
-                      category: newspaperCtrl.category.value,
-                      country: newspaperCtrl.country.value,
-                      language: newspaperCtrl.language.value,
-                    ).getNews(),
+                    future: newspaperCtrl.getNews(),
                     builder: (
                       context,
                       AsyncSnapshot<List<NewsModel>> snapshot,
@@ -115,7 +109,10 @@ class NewsPaperPage extends StatelessWidget {
                         );
                       } else {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: GFLoader(
+                            type: GFLoaderType.square,
+                            size: GFSize.LARGE,
+                          ),
                         );
                       }
                     },

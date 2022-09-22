@@ -23,7 +23,7 @@ class NewsMainPage extends StatelessWidget {
             showShadow: true,
             angle: -10.0,
             slideWidth: MediaQuery.of(context).size.width * 0.78,
-            menuScreen: DrawerWidget(),
+            menuScreen: const DrawerWidget(),
             mainScreen: const NewsDisplayer(),
           );
         });

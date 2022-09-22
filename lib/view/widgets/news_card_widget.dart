@@ -48,6 +48,9 @@ class NewsCardWidget extends StatelessWidget {
             : Image.asset('assets/images/placeholder.png').image,
         fit: BoxFit.contain,
         height: MediaQuery.of(context).size.height * .29,
+        errorBuilder: ((context, error, stackTrace) {
+          return Image.asset('assets/images/placeholder.png');
+        }),
       ),
       title: GFListTile(
         title: Text(

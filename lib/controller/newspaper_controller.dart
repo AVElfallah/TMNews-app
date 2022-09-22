@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:tell_me_news/model/news_enums.dart';
+import 'package:tell_me_news/model/news_model.dart';
+
+import '../repository/news_repository.dart';
 
 class NewspaperController extends GetxController {
   Rx<SupportedCategories> category = SupportedCategories.general.obs;
@@ -16,5 +19,13 @@ class NewspaperController extends GetxController {
 
   changeCountry(SupportedCountry coun) {
     country.value = coun;
+  }
+
+  Future<List<NewsModel>> getNews() async {
+    return GetNews(
+      category: category.value,
+      country: country.value,
+      language: language.value,
+    ).getNews();
   }
 }

@@ -33,7 +33,10 @@ class MyApp extends StatelessWidget {
         appBarElevation: 2,
       ),
       getPages: [
-        GetPage(name: '/splash', page: () => const SplashScreen()),
+        GetPage(
+          name: '/splash',
+          page: () => const SplashScreen(),
+        ),
         GetPage(
           name: '/homepage',
           page: () => const NewsMainPage(),

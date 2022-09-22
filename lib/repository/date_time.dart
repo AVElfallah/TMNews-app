@@ -14,4 +14,8 @@ class DateTimeFormat {
   String getDate() {
     return '${dateTime.day}-${dateTime.month}-${dateTime.year}';
   }
+
+  String getAPIDate() {
+    return '${dateTime.year}-${dateTime.month}-${dateTime.day}';
+  }
 }
