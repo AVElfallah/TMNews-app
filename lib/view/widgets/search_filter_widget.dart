@@ -50,7 +50,7 @@ class SearchFilterWidget extends StatelessWidget {
                           setState(() {});
                         },
                         title: const Text('Title'),
-                        value: ctrl.searchIn.contains(SearchIn.title),
+                        value: ctrl.searchIn.contains(SearchIn.title).obs.value,
                       ),
                     ),
                   ),
@@ -62,19 +62,24 @@ class SearchFilterWidget extends StatelessWidget {
                           setState(() {});
                         },
                         title: const Text('Description'),
-                        value: ctrl.searchIn.contains(SearchIn.description),
+                        value: ctrl.searchIn
+                            .contains(SearchIn.description)
+                            .obs
+                            .value,
                       ),
                     ),
                   ),
                   PopupMenuItem(
                     child: Obx(
                       () => SwitchListTile(
-                          onChanged: (val) {
-                            ctrl.changeSearchIn(SearchIn.content);
-                            setState(() {});
-                          },
-                          title: const Text('Content'),
-                          value: ctrl.searchIn.contains(SearchIn.content)),
+                        onChanged: (val) {
+                          ctrl.changeSearchIn(SearchIn.content);
+                          setState(() {});
+                        },
+                        title: const Text('Content'),
+                        value:
+                            ctrl.searchIn.contains(SearchIn.content).obs.value,
+                      ),
                     ),
                   ),
                 ];
@@ -117,7 +122,7 @@ class SearchFilterWidget extends StatelessWidget {
                       var now = DateTime.now();
                       showDatePicker(
                         context: context,
-                        initialDate: ctrl.from.value,
+                        initialDate: ctrl.from,
                         firstDate: DateTime(now.year - 1),
                         lastDate: now,
                       ).then(
@@ -133,7 +138,7 @@ class SearchFilterWidget extends StatelessWidget {
                     onPressed: () {
                       showDatePicker(
                         context: context,
-                        initialDate: ctrl.to.value,
+                        initialDate: ctrl.to,
                         firstDate: DateTime(1999),
                         lastDate: DateTime.now(),
                       ).then(

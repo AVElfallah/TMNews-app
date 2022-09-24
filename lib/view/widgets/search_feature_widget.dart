@@ -17,19 +17,19 @@ class SearchFeatureWidget extends StatelessWidget {
         icon: const Icon(
           Icons.star,
           color: Colors.yellow,
-          size: 40,
+          size: 30,
         ),
         title: const Text(
           'Search features',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         description: Text(
           featureTitle!,
-          style: const TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       showImage: true,

@@ -33,7 +33,6 @@ class NewsSearchRepository {
     final String newsRequest =
         'https://newsapi.org/v2/everything?q=$searchString&apiKey=$apiKey$getSearchIn$getLanguage$getFromDate$getToDate';
 
-    print(newsRequest);
     try {
       var response = await Dio().get(newsRequest);
       var res = const JsonDecoder().convert(response.toString());

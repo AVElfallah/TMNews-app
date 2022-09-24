@@ -7,12 +7,14 @@ import 'package:tell_me_news/repository/news_search_repository.dart';
 import '../model/news_model.dart';
 
 class SearchController extends GetxController {
-  Rx<TextEditingController> searchCtrl = TextEditingController().obs;
-  Rx<DateTime> from = DateTime.now().obs;
-  Rx<DateTime> to = DateTime.now().obs;
-  Rx<SupportedLanguage> supportedLanguage = SupportedLanguage.ar.obs;
+  TextEditingController searchCtrl = TextEditingController();
 
-  RxList<SearchIn> searchIn = <SearchIn>[].obs;
+  DateTime from = DateTime.now();
+  DateTime to = DateTime.now();
+  SupportedLanguage supportedLanguage = SupportedLanguage.ar;
+
+  final searchIn = <SearchIn>[].obs;
+  RxBool get isHaveTitle => searchIn.contains(SearchIn.title).obs;
 
   void changeSearchIn(SearchIn se) {
     if (searchIn.contains(se)) {
@@ -20,15 +22,18 @@ class SearchController extends GetxController {
     } else {
       searchIn.add(se);
     }
+    update();
+    printInfo(info: 'Change search in to $searchIn');
   }
 
   void changeLanguage(SupportedLanguage suLanguage) {
-    supportedLanguage.value = suLanguage;
+    supportedLanguage = suLanguage;
+    printInfo(info: 'Change language to $suLanguage');
   }
 
   void changefrom(DateTime dateTime) {
-    if (to.value.isAfter(dateTime) || to.value.isAtSameMomentAs(dateTime)) {
-      from.value = dateTime;
+    if (to.isAfter(dateTime) || to.isAtSameMomentAs(dateTime)) {
+      from = dateTime;
     } else {
       Get.snackbar(
         'Date Erorr',
@@ -39,11 +44,12 @@ class SearchController extends GetxController {
         backgroundColor: Colors.red.shade900,
       );
     }
+    printInfo(info: 'Change fromTime to $from');
   }
 
   void changeto(DateTime dateTime) {
-    if (dateTime.isAfter(from.value) || dateTime.isAtSameMomentAs(from.value)) {
-      to.value = dateTime;
+    if (dateTime.isAfter(from) || dateTime.isAtSameMomentAs(from)) {
+      to = dateTime;
     } else {
       Get.snackbar(
         'Date Erorr',
@@ -54,31 +60,19 @@ class SearchController extends GetxController {
         backgroundColor: Colors.red.shade900,
       );
     }
+    printInfo(info: 'Change fromTime to $to');
   }
 
   Future<List<NewsModel>> searchForNews() async {
-    final searchn = searchIn.value;
-    final toVal = to.value;
-    final fromVal = from.value;
-    final supVal = supportedLanguage.value;
-    final text = searchCtrl.value.text;
-    if (text != '') {
+    if (searchCtrl.value.text != '') {
       return await NewsSearchRepository(
-        searchIn: searchn,
-        supportedLanguage: supVal,
-        dateTimeTo: toVal,
-        dateTimeFrom: fromVal,
-        searchString: searchCtrl.value.text,
+        searchIn: searchIn,
+        supportedLanguage: supportedLanguage,
+        dateTimeTo: to,
+        dateTimeFrom: from,
+        searchString: searchCtrl.text,
       ).getNews();
     } else {
-      Get.snackbar(
-        'Empty Filed',
-        'Type any thing to search',
-        icon: const Icon(Icons.error),
-        duration: const Duration(seconds: 5),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade900,
-      );
       return <NewsModel>[];
     }
   }
