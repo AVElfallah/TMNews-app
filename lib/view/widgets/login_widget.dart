@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tell_me_news/repository/app_preferences.dart';
+
+import '../../controller/user_controller.dart';
+import '../../model/app_user.dart';
+import '../../model/news_enums.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -120,7 +127,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           }),
                         ),
                         TextButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {},
                           icon: const Icon(
                             Icons.input,
                             size: 34,

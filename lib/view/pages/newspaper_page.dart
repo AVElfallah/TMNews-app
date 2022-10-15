@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:getwidget/getwidget.dart';
+import 'package:tell_me_news/controller/app_settings_controller.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
-import 'package:tell_me_news/controller/search_controller.dart';
 
 import 'package:tell_me_news/view/widgets/news_filter_widget.dart';
-import 'package:tell_me_news/view/widgets/search_feature_widget.dart';
-import 'package:tell_me_news/view/widgets/search_filter_widget.dart';
-import 'package:tell_me_news/view/widgets/search_futures.dart';
+import 'package:tell_me_news/view/widgets/search_dialog_widget.dart';
 
-import '../../controller/darwer_controller.dart';
 import '../../model/news_model.dart';
 import '../widgets/categories_widget.dart';
 import '../widgets/news_card_widget.dart';
@@ -25,8 +21,8 @@ class NewsPaperPage extends StatelessWidget {
       NewspaperController(),
       tag: 'newspaper',
     );
-    return GetBuilder<AppDarwerController>(
-      tag: 'drawer_ctrl',
+    return GetBuilder<AppSettingsController>(
+      tag: 'appSettings',
       builder: (ctrl) {
         return Obx(
           () => Scaffold(
@@ -39,74 +35,7 @@ class NewsPaperPage extends StatelessWidget {
                     Icons.search,
                   ),
                   onPressed: () {
-                    //    Get.toNamed('/search');
-                    showCupertinoDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        barrierLabel: 'Search',
-                        builder: ((context) {
-                          var searchCtrl = Get.put<SearchController>(
-                            SearchController(),
-                            tag: 'search',
-                          );
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 80),
-                            child: SimpleDialog(
-                              backgroundColor: context.theme.primaryColor,
-                              title: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text('Search Box'),
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: const Icon(
-                                      Icons.arrow_back,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                              children: [
-                                const SearchFilterWidget(),
-                                SizedBox(
-                                  height: 60,
-                                  child: GFTextFieldPill(
-                                    controller: searchCtrl.searchCtrl,
-                                    editingbordercolor: Colors.white,
-                                    idlebordercolor: Colors.black,
-                                    borderwidth: 1,
-                                    hintText: 'search word',
-                                    iconPrefix: const Icon(Icons.search),
-                                    style: const TextStyle(
-                                      fontSize: 19,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: GFButtonBadge(
-                                    onPressed: () {
-                                      Get.toNamed('/search');
-                                    },
-                                    elevation: 10,
-                                    text: 'Search Now',
-                                    textStyle: const TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const SearchFeatures()
-                              ],
-                            ),
-                          );
-                        }));
+                    SearchDialog.show(context);
                   },
                 ),
                 const NewsFilterWidget()
@@ -153,7 +82,8 @@ class NewsPaperPage extends StatelessWidget {
                             ),
                             showImage: true,
                             image: Image(
-                                image: AssetImage('assets/images/error.png')),
+                              image: AssetImage('assets/images/error.png'),
+                            ),
                           );
                         }
                         return SizedBox(

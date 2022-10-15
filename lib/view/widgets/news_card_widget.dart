@@ -1,29 +1,36 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/components/button/gf_button_bar.dart';
 import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
+import 'package:tell_me_news/controller/newscard_controller.dart';
 
 import 'package:tell_me_news/model/news_model.dart';
 
 import '../../repository/date_time.dart';
 
 class NewsCardWidget extends StatelessWidget {
-  const NewsCardWidget(
-      {Key? key,
-      required this.imageUrl,
-      required this.title,
-      required this.newsProvider,
-      required this.dateTime,
-      required this.description,
-      required this.newsUrl})
-      : super(key: key);
+  const NewsCardWidget({
+    Key? key,
+    required this.imageUrl,
+    required this.title,
+    required this.newsProvider,
+    required this.dateTime,
+    required this.description,
+    required this.newsUrl,
+    required this.id,
+    this.isBookmark = false,
+  }) : super(key: key);
   final String imageUrl;
   final String title;
   final String newsProvider;
   final DateTime dateTime;
   final String description;
   final String newsUrl;
-  factory NewsCardWidget.fromModel(NewsModel model) {
+  final String? id;
+  final bool? isBookmark;
+  factory NewsCardWidget.fromModel(NewsModel model, {isBookmarked = false}) {
     return NewsCardWidget(
       imageUrl: model.urlToImage ?? '',
       title: model.title ?? 'no title',
@@ -31,11 +38,14 @@ class NewsCardWidget extends StatelessWidget {
       dateTime: model.dateTime ?? DateTime.now(),
       description: model.description ?? '',
       newsUrl: model.url!,
+      id: model.id,
+      isBookmark: isBookmarked!,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    var ctrl = NewsCardController();
     return GFCard(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
@@ -44,7 +54,7 @@ class NewsCardWidget extends StatelessWidget {
       showImage: true,
       image: Image(
         image: (imageUrl != '')
-            ? NetworkImage(imageUrl)
+            ? CachedNetworkImageProvider(imageUrl)
             : Image.asset('assets/images/placeholder.png').image,
         fit: BoxFit.contain,
         height: MediaQuery.of(context).size.height * .29,
@@ -92,24 +102,49 @@ class NewsCardWidget extends StatelessWidget {
         ),
       ),
       borderRadius: BorderRadius.circular(25),
-      buttonBar: GFButtonBar(children: [
-        TextButton.icon(
-          onPressed: () {},
-          label: const Text('bookmark'),
-          icon: const Icon(
-            Icons.bookmark,
-            size: 28,
+      buttonBar: GFButtonBar(
+        children: [
+          Visibility(
+            visible: !isBookmark!,
+            child: TextButton.icon(
+              onPressed: () {
+                ctrl.addOrRemoveBookmark(
+                  NewsModel(
+                    title: title,
+                    dateTime: dateTime,
+                    url: newsUrl,
+                    sourceName: newsProvider,
+                    urlToImage: imageUrl,
+                    id: id,
+                    description: description,
+                  ),
+                );
+              },
+              label: const Text('bookmark'),
+              icon: const Icon(
+                Icons.bookmark,
+                size: 28,
+              ),
+            ),
           ),
-        ),
-        TextButton.icon(
-          onPressed: () {},
-          label: const Text('Read more'),
-          icon: const Icon(
-            Icons.auto_stories,
-            size: 28,
+          TextButton.icon(
+            onPressed: () {
+              Get.toNamed(
+                '/news_webview',
+                parameters: {
+                  'webUrl': newsUrl,
+                  'title': title,
+                },
+              );
+            },
+            label: const Text('Read more'),
+            icon: const Icon(
+              Icons.auto_stories,
+              size: 28,
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

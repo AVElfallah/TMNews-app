@@ -14,12 +14,14 @@ class SplashController extends GetxController {
             value: 0,
             duration: const Duration(milliseconds: 5030))
           ..animateTo(1, curve: Curves.easeInCubic)
-          ..addListener(() {
-            if (animationController.value.isCompleted) {
-              placeholder = const PlaceholderSplashWidget();
-            }
-            update();
-          }))
+          ..addListener(
+            () {
+              if (animationController.value.isCompleted) {
+                placeholder = const PlaceholderSplashWidget();
+              }
+              update();
+            },
+          ))
         .obs;
   }
 }

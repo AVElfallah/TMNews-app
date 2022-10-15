@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
-import 'package:tell_me_news/controller/darwer_controller.dart';
+import 'package:tell_me_news/controller/app_settings_controller.dart';
+
 import 'package:tell_me_news/view/pages/news_displayer_page.dart';
 
 import 'package:tell_me_news/view/widgets/drawer_widget.dart';
@@ -11,9 +12,9 @@ class NewsMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppDarwerController>(
-        init: AppDarwerController(),
-        tag: 'drawer_ctrl',
+    return GetBuilder<AppSettingsController>(
+        init: AppSettingsController(),
+        tag: 'appSettings',
         builder: (ctrl) {
           return ZoomDrawer(
             controller: ctrl.zoomDrawerController,

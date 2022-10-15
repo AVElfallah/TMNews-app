@@ -13,14 +13,26 @@ class PlaceholderSplashWidget extends StatelessWidget {
             Get.toNamed('login_reg');
           },
           icon: const Icon(Icons.person),
-          label: const Text('Login | Sing up'),
+          label: Text(
+            'Login | Sing up',
+            style: TextStyle(
+              color: context.theme.secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         TextButton.icon(
           onPressed: () {
             Get.offAndToNamed('/homepage');
           },
           icon: const Icon(Icons.public),
-          label: const Text('Skip Login'),
+          label: Text(
+            'Skip Login',
+            style: TextStyle(
+              color: context.theme.secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         )
       ],
     );

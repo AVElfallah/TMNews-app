@@ -29,63 +29,73 @@ class SearchFilterWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           //search query
-          StatefulBuilder(builder: (context, setState) {
-            return PopupMenuButton(
-              icon: const Icon(
-                Icons.manage_search,
-                size: 40,
-              ),
-              tooltip: 'to specify where search in',
-              position: PopupMenuPosition.under,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(35),
-              ),
-              itemBuilder: ((context) {
-                return [
-                  PopupMenuItem(
-                    child: Obx(
-                      () => SwitchListTile(
-                        onChanged: (val) {
-                          ctrl.changeSearchIn(SearchIn.title);
-                          setState(() {});
-                        },
-                        title: const Text('Title'),
-                        value: ctrl.searchIn.contains(SearchIn.title).obs.value,
+          StatefulBuilder(
+            builder: (context, setState) {
+              return PopupMenuButton(
+                icon: const Icon(
+                  Icons.manage_search,
+                  size: 40,
+                ),
+                tooltip: 'to specify where search in',
+                position: PopupMenuPosition.under,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35),
+                ),
+                itemBuilder: ((context) {
+                  return [
+                    PopupMenuItem(
+                      child: Obx(
+                        () => SwitchListTile(
+                          onChanged: (val) {
+                            ctrl.changeSearchIn(SearchIn.title);
+                            setState(() {});
+                          },
+                          title: const Text('Title'),
+                          value:
+                              ctrl.searchIn.contains(SearchIn.title).obs.value,
+                        ),
                       ),
                     ),
-                  ),
-                  PopupMenuItem(
-                    child: Obx(
-                      () => SwitchListTile(
-                        onChanged: (val) {
-                          ctrl.changeSearchIn(SearchIn.description);
-                          setState(() {});
-                        },
-                        title: const Text('Description'),
-                        value: ctrl.searchIn
-                            .contains(SearchIn.description)
-                            .obs
-                            .value,
+                    PopupMenuItem(
+                      child: Obx(
+                        () => SwitchListTile(
+                          onChanged: (val) {
+                            ctrl.changeSearchIn(SearchIn.description);
+                            setState(() {});
+                          },
+                          title: const Text(
+                            'Description',
+                            maxLines: 1,
+                            overflow: TextOverflow.visible,
+                            softWrap: false,
+                          ),
+                          value: ctrl.searchIn
+                              .contains(SearchIn.description)
+                              .obs
+                              .value,
+                        ),
                       ),
                     ),
-                  ),
-                  PopupMenuItem(
-                    child: Obx(
-                      () => SwitchListTile(
-                        onChanged: (val) {
-                          ctrl.changeSearchIn(SearchIn.content);
-                          setState(() {});
-                        },
-                        title: const Text('Content'),
-                        value:
-                            ctrl.searchIn.contains(SearchIn.content).obs.value,
+                    PopupMenuItem(
+                      child: Obx(
+                        () => SwitchListTile(
+                          onChanged: (val) {
+                            ctrl.changeSearchIn(SearchIn.content);
+                            setState(() {});
+                          },
+                          title: const Text('Content'),
+                          value: ctrl.searchIn
+                              .contains(SearchIn.content)
+                              .obs
+                              .value,
+                        ),
                       ),
                     ),
-                  ),
-                ];
-              }),
-            );
-          }),
+                  ];
+                }),
+              );
+            },
+          ),
           //selection language
           PopupMenuButton<SupportedLanguage>(
             constraints: BoxConstraints.expand(

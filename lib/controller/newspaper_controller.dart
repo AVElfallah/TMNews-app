@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tell_me_news/model/news_enums.dart';
 import 'package:tell_me_news/model/news_model.dart';
+import 'package:tell_me_news/repository/app_preferences.dart';
 
 import '../repository/news_repository.dart';
 
@@ -13,12 +14,14 @@ class NewspaperController extends GetxController {
     category.value = cat;
   }
 
-  changeLanguage(SupportedLanguage lang) {
+  changeLanguage(SupportedLanguage lang) async {
     language.value = lang;
+    await SharedAppSettings().changeNewsLanguage(lang);
   }
 
-  changeCountry(SupportedCountry coun) {
+  changeCountry(SupportedCountry coun) async {
     country.value = coun;
+    await SharedAppSettings().changeNewsCountry(coun);
   }
 
   Future<List<NewsModel>> getNews() async {

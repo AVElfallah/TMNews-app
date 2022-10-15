@@ -1,15 +1,23 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:tell_me_news/controller/user_controller.dart';
+import 'package:tell_me_news/view/pages/bookmark_page.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tell_me_news/view/pages/login_singup_page.dart';
 import 'package:tell_me_news/view/pages/news_main_page.dart';
 import 'package:tell_me_news/view/pages/news_search_page.dart';
+import 'package:tell_me_news/view/pages/news_web_view.dart';
 
 import 'package:tell_me_news/view/pages/splash_screen.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+import 'repository/app_preferences.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedAppSettings().intialGuestAccount();
+  await Get.put<UserController>(UserController(), tag: 'user_ctrl').initialized;
   runApp(const MyApp());
 }
 
@@ -18,12 +26,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userCtrl = Get.find<UserController>(tag: 'user_ctrl');
     const scheme = FlexScheme.bigStone;
-
+    Get.changeThemeMode(
+      userCtrl.userPreferences!.isDarkMode! ? ThemeMode.dark : ThemeMode.light,
+    );
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Tell Me News',
       debugShowCheckedModeBanner: false,
-      themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       theme: FlexThemeData.light(
         scheme: scheme,
         appBarElevation: 0.5,
@@ -55,8 +65,23 @@ class MyApp extends StatelessWidget {
           transitionDuration: const Duration(milliseconds: 1700),
           curve: Curves.easeInOutCubicEmphasized,
         ),
+        GetPage(
+          name: '/news_webview',
+          page: () => const NewsWebView(),
+          transition: Transition.zoom,
+          transitionDuration: const Duration(milliseconds: 1700),
+          curve: Curves.easeInOutCubicEmphasized,
+        ),
+        GetPage(
+          name: '/bookmarks',
+          page: () => const BookmarkPage(),
+          transition: Transition.zoom,
+          transitionDuration: const Duration(milliseconds: 1700),
+          curve: Curves.easeInOutCubicEmphasized,
+        ),
       ],
-      initialRoute: '/splash',
+      initialRoute:
+          userCtrl.userPreferences!.isLogin! ? '/homepage' : '/splash',
     );
   }
 }

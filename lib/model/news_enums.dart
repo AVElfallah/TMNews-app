@@ -14,7 +14,6 @@ enum SupportedLanguage {
   en,
   es,
   fr,
-
   it,
   nl,
   no,
@@ -48,7 +47,6 @@ enum SupportedCountry {
   hu,
   id,
   ie,
-
   ind,
   it,
   jp,

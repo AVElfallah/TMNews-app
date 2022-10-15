@@ -58,80 +58,81 @@ class _SingupWidgetState extends State<SingupWidget> {
                   child: Form(
                     key: _formKey,
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          /*
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        /*
                               *User Name
                               */
 
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              style: const TextStyle(fontSize: 18),
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                constraints: constraints,
-                                contentPadding: const EdgeInsets.all(10),
-                                hintText: 'Input your user name',
-                                label: Text(
-                                  'User Name',
-                                  style: GoogleFonts.righteous(fontSize: 25),
-                                ),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                                prefixIcon: const Icon(Icons.person),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide(
-                                    color: Colors.lightBlue.shade800,
-                                  ),
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                            style: const TextStyle(fontSize: 18),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              constraints: constraints,
+                              contentPadding: const EdgeInsets.all(10),
+                              hintText: 'Input your user name',
+                              label: Text(
+                                'User Name',
+                                style: GoogleFonts.righteous(fontSize: 20),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.center,
+                              prefixIcon: const Icon(Icons.person),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue.shade800,
                                 ),
                               ),
                             ),
                           ),
-                          //End UserName//
+                        ),
+                        //End UserName//
 
-                          //Email Start//
+                        //Email Start//
 
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextFormField(
-                              controller: userTXTCtrl,
-                              style: const TextStyle(fontSize: 18),
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(10),
-                                constraints: constraints,
-                                hintText: 'Input your E-mail',
-                                label: Text(
-                                  'Email',
-                                  style: GoogleFonts.righteous(fontSize: 24),
-                                ),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                                prefixIcon: const Icon(Icons.mail_outline),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide: BorderSide(
-                                    color: Colors.lightBlue.shade800,
-                                  ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: userTXTCtrl,
+                            style: const TextStyle(fontSize: 18),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(10),
+                              constraints: constraints,
+                              hintText: 'Input your E-mail',
+                              label: Text(
+                                'Email',
+                                style: GoogleFonts.righteous(fontSize: 20),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.center,
+                              prefixIcon: const Icon(Icons.mail_outline),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue.shade800,
                                 ),
                               ),
                             ),
                           ),
-                          //Email End//
+                        ),
+                        //Email End//
 
-                          //Password Start//
+                        //Password Start//
 
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: StatefulBuilder(builder:
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: StatefulBuilder(
+                            builder:
                                 (BuildContext context, StateSetter setState) {
                               return TextFormField(
                                 controller: passowordTXTCtrl,
@@ -143,7 +144,7 @@ class _SingupWidgetState extends State<SingupWidget> {
                                   hintText: 'Input your password',
                                   label: Text(
                                     'Password',
-                                    style: GoogleFonts.righteous(fontSize: 25),
+                                    style: GoogleFonts.righteous(fontSize: 20),
                                   ),
                                   contentPadding: const EdgeInsets.all(10),
                                   prefixIcon: const Icon(Icons.lock),
@@ -165,13 +166,15 @@ class _SingupWidgetState extends State<SingupWidget> {
                                   ),
                                 ),
                               );
-                            }),
+                            },
                           ),
-                          //Password End//
+                        ),
+                        //Password End//
 
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: StatefulBuilder(builder:
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: StatefulBuilder(
+                            builder:
                                 (BuildContext context, StateSetter setState) {
                               return TextFormField(
                                 obscureText: isHidenPassword,
@@ -211,22 +214,24 @@ class _SingupWidgetState extends State<SingupWidget> {
                                   ),
                                 ),
                               );
-                            }),
-                          ),
-                          TextButton.icon(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {}
                             },
-                            icon: const Icon(
-                              Icons.input,
-                              size: 34,
-                            ),
-                            label: Text(
-                              'Singup',
-                              style: GoogleFonts.righteous(fontSize: 18),
-                            ),
-                          )
-                        ]),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {}
+                          },
+                          icon: const Icon(
+                            Icons.input,
+                            size: 34,
+                          ),
+                          label: Text(
+                            'Singup',
+                            style: GoogleFonts.righteous(fontSize: 18),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

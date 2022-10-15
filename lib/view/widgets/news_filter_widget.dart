@@ -1,7 +1,7 @@
-import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
+import 'package:tell_me_news/repository/country_flag.dart';
 
 import '../../model/news_enums.dart';
 
@@ -10,8 +10,6 @@ class NewsFilterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var supcount =
-        SupportedCountry.values.map(((e) => e.name.toUpperCase())).toList();
     return PopupMenuButton(
       icon: const Icon(Icons.filter_alt),
       tooltip: 'news filters',
@@ -55,28 +53,29 @@ class NewsFilterWidget extends StatelessWidget {
             child: GetX<NewspaperController>(
               tag: 'newspaper',
               builder: (newspaperCtrl) {
-                return CountryPickerDropdown(
-                  itemFilter: (country) {
-                    return supcount.contains(country.isoCode);
-                  },
-                  itemBuilder: (country) {
-                    return Row(
-                      children: <Widget>[
-                        CountryPickerUtils.getDefaultFlagImage(country),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text("(${country.isoCode})"),
-                      ],
-                    );
-                  },
-                  initialValue: newspaperCtrl.country.value.name.toUpperCase(),
-                  onValuePicked: (c) {
-                    newspaperCtrl.changeCountry(
-                      SupportedCountry.values.firstWhere(
-                        (country) => country.name == c.isoCode.toLowerCase(),
-                      ),
-                    );
+                return DropdownButton<SupportedCountry>(
+                  value: newspaperCtrl.country.value.obs.value,
+                  items: SupportedCountry.values
+                      .map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Row(
+                              children: <Widget>[
+                                Image.asset(
+                                  CountryFlag().getFlag(e),
+                                  width: 40,
+                                  height: 45,
+                                  fit: BoxFit.contain,
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(e.name.toUpperCase()),
+                              ],
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (coun) {
+                    newspaperCtrl.changeCountry(coun!);
                   },
                 );
               },

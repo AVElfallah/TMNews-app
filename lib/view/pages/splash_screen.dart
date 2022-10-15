@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
     animCtrl = pagCtrl.animationController;
 
     return Scaffold(
-      backgroundColor: Colors.lightBlue.shade900,
+      backgroundColor: context.theme.primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
