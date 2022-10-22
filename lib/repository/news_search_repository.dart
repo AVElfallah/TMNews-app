@@ -28,8 +28,9 @@ class NewsSearchRepository {
         : '&searchIn=${searchIn!.map((e) => e.name).join(',')}';
     final String getLanguage = '&language=${supportedLanguage!.name}';
     final String getFromDate =
-        '&from=${DateTimeFormat(dateTimeFrom!).getAPIDate()}';
-    final String getToDate = '&to=${DateTimeFormat(dateTimeTo!).getAPIDate()}';
+        '&from=${DateTimeFormat(dateTimeFrom!.toIso8601String()).getAPIDate()}';
+    final String getToDate =
+        '&to=${DateTimeFormat(dateTimeTo!.toIso8601String()).getAPIDate()}';
     final String newsRequest =
         'https://newsapi.org/v2/everything?q=$searchString&apiKey=$apiKey$getSearchIn$getLanguage$getFromDate$getToDate';
 

@@ -32,7 +32,7 @@ class CategoriesWidget extends StatelessWidget {
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
                   label: Text(
-                    'General',
+                    'general'.tr,
                     style: textStyle,
                   ),
                 ),
@@ -50,7 +50,10 @@ class CategoriesWidget extends StatelessWidget {
                       ctrl.category.value == SupportedCategories.business
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
-                  label: Text('Business', style: textStyle),
+                  label: Text(
+                    'business'.tr,
+                    style: textStyle,
+                  ),
                 ),
               ),
             ),
@@ -66,7 +69,10 @@ class CategoriesWidget extends StatelessWidget {
                       ctrl.category.value == SupportedCategories.entertainment
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
-                  label: Text('Entertainment', style: textStyle),
+                  label: Text(
+                    'entertainment'.tr,
+                    style: textStyle,
+                  ),
                 ),
               ),
             ),
@@ -82,7 +88,10 @@ class CategoriesWidget extends StatelessWidget {
                       ctrl.category.value == SupportedCategories.health
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
-                  label: Text('Health', style: textStyle),
+                  label: Text(
+                    'health'.tr,
+                    style: textStyle,
+                  ),
                 ),
               ),
             ),
@@ -98,7 +107,7 @@ class CategoriesWidget extends StatelessWidget {
                       ctrl.category.value == SupportedCategories.science
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
-                  label: Text('Science', style: textStyle),
+                  label: Text('science'.tr, style: textStyle),
                 ),
               ),
             ),
@@ -114,7 +123,10 @@ class CategoriesWidget extends StatelessWidget {
                       ctrl.category.value == SupportedCategories.sports
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
-                  label: Text('Sports', style: textStyle),
+                  label: Text(
+                    'sports'.tr,
+                    style: textStyle,
+                  ),
                 ),
               ),
             ),
@@ -130,7 +142,10 @@ class CategoriesWidget extends StatelessWidget {
                       ctrl.category.value == SupportedCategories.technology
                           ? Colors.green.shade800
                           : context.theme.chipTheme.backgroundColor,
-                  label: Text('Technology', style: textStyle),
+                  label: Text(
+                    'technology'.tr,
+                    style: textStyle,
+                  ),
                 ),
               ),
             ),

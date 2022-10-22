@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:getwidget/getwidget.dart';
+import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/app_settings_controller.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
 
@@ -27,7 +28,7 @@ class NewsPaperPage extends StatelessWidget {
         return Obx(
           () => Scaffold(
             appBar: AppBar(
-              title: const Text('News'),
+              title: Text('latestnews'.tr),
               centerTitle: true,
               actions: [
                 IconButton(
@@ -50,7 +51,7 @@ class NewsPaperPage extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.black54,
                     image: DecorationImage(
-                      image: AssetImage('assets/images/person.png'),
+                      image: AssetImage(Assets.person),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -78,11 +79,12 @@ class NewsPaperPage extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               description: Text(
-                                  'no data has been found change language or country'),
+                                'no data has been found change language or country',
+                              ),
                             ),
                             showImage: true,
                             image: Image(
-                              image: AssetImage('assets/images/error.png'),
+                              image: AssetImage(Assets.appError),
                             ),
                           );
                         }

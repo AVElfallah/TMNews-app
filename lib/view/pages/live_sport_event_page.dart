@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -25,7 +27,8 @@ class _LiveSportsEventsPageState extends State<LiveSportsEventsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('live'),
+        title: const Text('Live'),
+        centerTitle: true,
       ),
       /*   body: WebView(
         initialUrl: 'help',

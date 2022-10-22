@@ -50,7 +50,7 @@ class SearchFilterWidget extends StatelessWidget {
                             ctrl.changeSearchIn(SearchIn.title);
                             setState(() {});
                           },
-                          title: const Text('Title'),
+                          title: Text('title'.tr),
                           value:
                               ctrl.searchIn.contains(SearchIn.title).obs.value,
                         ),
@@ -63,8 +63,8 @@ class SearchFilterWidget extends StatelessWidget {
                             ctrl.changeSearchIn(SearchIn.description);
                             setState(() {});
                           },
-                          title: const Text(
-                            'Description',
+                          title: Text(
+                            'description'.tr,
                             maxLines: 1,
                             overflow: TextOverflow.visible,
                             softWrap: false,
@@ -83,7 +83,7 @@ class SearchFilterWidget extends StatelessWidget {
                             ctrl.changeSearchIn(SearchIn.content);
                             setState(() {});
                           },
-                          title: const Text('Content'),
+                          title: Text('content'.tr),
                           value: ctrl.searchIn
                               .contains(SearchIn.content)
                               .obs
@@ -139,7 +139,7 @@ class SearchFilterWidget extends StatelessWidget {
                         (from) => ctrl.changefrom(from!),
                       );
                     },
-                    label: const Text('From'),
+                    label: Text('from'.tr),
                     icon: const Icon(Icons.date_range),
                   ),
                 ),
@@ -155,7 +155,7 @@ class SearchFilterWidget extends StatelessWidget {
                         (to) => ctrl.changeto(to!),
                       );
                     },
-                    label: const Text('To'),
+                    label: Text('to'.tr),
                     icon: const Icon(Icons.date_range),
                   ),
                 ),

@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tell_me_news/config/app_route.dart';
+import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/splash_controller.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,17 +16,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   var pagCtrl = Get.put<SplashController>(SplashController());
-  late Rx<AnimationController> animCtrl;
+  late AnimationController animCtrl;
   @override
   void initState() {
     super.initState();
+    pagCtrl.initAnimController(this);
+    animCtrl = pagCtrl.animationController;
   }
 
   @override
   Widget build(BuildContext context) {
-    pagCtrl.initAnimController(this);
-    animCtrl = pagCtrl.animationController;
-
     return Scaffold(
       backgroundColor: context.theme.primaryColor,
       body: Center(
@@ -31,9 +33,9 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FadeTransition(
-              opacity: animCtrl.value,
+              opacity: animCtrl,
               child: Text(
-                'Welcome to TM-News',
+                'welcome'.tr,
                 style: GoogleFonts.alfaSlabOne(
                   fontSize: 29,
                   color: Colors.white,
@@ -41,12 +43,45 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             ScaleTransition(
-              scale: animCtrl.value,
-              child: Image.asset('assets/images/tmlogo.png'),
+              scale: animCtrl,
+              child: Image.asset(Assets.appLogo),
             ),
             GetBuilder<SplashController>(
               builder: (pageCtrl) {
-                return pageCtrl.placeholder;
+                return Visibility(
+                  visible: pagCtrl.isAnmatedDone,
+                  child: Column(
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {
+                          Get.toNamed(Routes.loginRegPage);
+                        },
+                        icon: const Icon(Icons.person),
+                        label: Text(
+                          'loginReg'.tr,
+                          style: TextStyle(
+                            color: context.theme.secondaryHeaderColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      TextButton.icon(
+                        onPressed: () {
+                          debugPrint(FirebaseAuth.instance.toString());
+                          Get.offAndToNamed(Routes.homePage);
+                        },
+                        icon: const Icon(Icons.public),
+                        label: Text(
+                          'skiplogin'.tr,
+                          style: TextStyle(
+                            color: context.theme.secondaryHeaderColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
               },
               init: SplashController(),
             )

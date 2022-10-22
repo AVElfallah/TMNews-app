@@ -13,7 +13,7 @@ class CurrencyNewsPage extends GetView {
   Widget build(BuildContext context) {
     final currencyCtrl = Get.put(
       CurrencyConverterController(),
-    );
+    )..initialized;
 
     final currenciesAsItem = Currencies()
         .getAllCodes()
@@ -31,7 +31,7 @@ class CurrencyNewsPage extends GetView {
     ).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Currency Converter'),
+        title: Text('currencyconverter'.tr),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -158,9 +158,9 @@ class CurrencyNewsPage extends GetView {
                 Icons.compare_arrows_rounded,
                 color: (context.isDarkMode) ? GFColors.PRIMARY : GFColors.WHITE,
               ),
-              child: const Text(
-                'Convert',
-                style: TextStyle(
+              child: Text(
+                'convert'.tr,
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),

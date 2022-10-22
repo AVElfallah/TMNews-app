@@ -5,7 +5,7 @@ class NewsModel {
   final String? url;
   final String? urlToImage;
   final String? sourceName;
-  final DateTime? dateTime;
+  final String? dateTime;
 
   NewsModel({
     this.title,
@@ -34,13 +34,11 @@ class NewsModel {
   factory NewsModel.fromJson(Map jsonObject) {
     var id = jsonObject['source']['name'] + jsonObject['publishedAt'];
     return NewsModel(
-      id: id,
+      id: jsonObject['id'] ?? id,
       title: jsonObject['title'],
       url: jsonObject['url'],
       urlToImage: jsonObject['urlToImage'],
-      dateTime: DateTime.parse(
-        jsonObject['publishedAt'],
-      ),
+      dateTime: jsonObject['publishedAt'],
       description: jsonObject['description'],
       sourceName: jsonObject['source']['name'],
     );

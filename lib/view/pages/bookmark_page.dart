@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tell_me_news/controller/bookmark_controller.dart';
@@ -33,12 +34,13 @@ class BookmarkPage extends GetView<BookmarkController> {
         () {
           return FutureBuilder(
             future: controller.getBookmarks.value,
-            builder: (context, AsyncSnapshot<List<Map>> snapshot) {
+            builder: (context, AsyncSnapshot<List> snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: ((context, index) {
                     var newsModel = NewsModel.fromJson(snapshot.data![index]);
+
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Dismissible(
@@ -47,10 +49,39 @@ class BookmarkPage extends GetView<BookmarkController> {
                           color: Colors.red,
                           size: 150,
                         ),
-                        key: UniqueKey(),
-                        onDismissed: (dir) {
-                          controller.removeFromBookmarks(newsModel.id!);
+                        confirmDismiss: (direction) {
+                          return showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoAlertDialog(
+                                title: const Text('Delete'),
+                                content: const Text('Delete bookmark forever'),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      controller
+                                          .removeFromBookmarks(newsModel.id!);
+                                      Navigator.of(
+                                        context,
+                                      ).pop(true);
+                                    },
+                                    child: const Text('Yes'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(
+                                        context,
+                                      ).pop(false);
+                                    },
+                                    child: const Text('No'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
+                        key: UniqueKey(),
+                        onDismissed: (dir) {},
                         child: NewsCardWidget.fromModel(
                           newsModel,
                           isBookmarked: true,

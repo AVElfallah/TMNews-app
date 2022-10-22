@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/app_settings_controller.dart';
 import 'package:tell_me_news/repository/app_preferences.dart';
 
@@ -34,7 +36,7 @@ class DrawerWidget extends StatelessWidget {
                         child: SizedBox.fromSize(
                           size: const Size.fromRadius(40), // Image radius
                           child: Image.asset(
-                            'assets/images/person.png',
+                            Assets.person,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -63,7 +65,7 @@ class DrawerWidget extends StatelessWidget {
               builder: (ctx, StateSetter setter) {
                 return SwitchListTile(
                   title: Text(
-                    'Dark Mode',
+                    'darkmode'.tr,
                     style: GoogleFonts.righteous(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
@@ -91,7 +93,7 @@ class DrawerWidget extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                "App Language",
+                "applanguage".tr,
                 style: GoogleFonts.righteous(
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
@@ -107,7 +109,7 @@ class DrawerWidget extends StatelessWidget {
                 Get.toNamed('/bookmarks');
               },
               title: Text(
-                "Bookmarks",
+                "bookmarks".tr,
                 style: GoogleFonts.righteous(
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
@@ -120,7 +122,7 @@ class DrawerWidget extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                "User Settings",
+                "usersettings".tr,
                 style: GoogleFonts.righteous(
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
@@ -137,6 +139,7 @@ class DrawerWidget extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 userCtrl.refresh();
+                await FirebaseAuth.instance.signOut();
                 await Get.offAllNamed('/splash');
               },
               style: ElevatedButton.styleFrom(
@@ -150,7 +153,7 @@ class DrawerWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('Logout'),
+              child: Text('logout'.tr),
             )
           ],
         );

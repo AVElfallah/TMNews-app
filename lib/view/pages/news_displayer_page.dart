@@ -35,25 +35,25 @@ class NewsDisplayer extends StatelessWidget {
           ),
           bottomNavigationBar: Obx(
             () => GNav(
-              tabs: const [
+              tabs: [
                 GButton(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   icon: Icons.newspaper,
-                  text: 'Newspaper',
+                  text: 'newspaper'.tr,
                   rippleColor: Colors.grey,
                   gap: 20,
                 ),
                 GButton(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   icon: Icons.sports_soccer,
-                  text: 'Live Sports Events',
+                  text: 'livesports'.tr,
                   rippleColor: Colors.grey,
                   gap: 20,
                 ),
                 GButton(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   icon: Icons.currency_bitcoin,
-                  text: 'Currency',
+                  text: 'currency'.tr,
                   rippleColor: Colors.grey,
                   gap: 20,
                 ),

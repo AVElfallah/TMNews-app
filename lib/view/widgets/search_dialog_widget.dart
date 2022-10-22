@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:tell_me_news/config/app_route.dart';
 
 import '../../controller/search_controller.dart';
 import 'search_filter_widget.dart';
@@ -30,7 +31,7 @@ class SearchDialog extends GetView {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Search Box'),
+              Text('searchbox'.tr),
               IconButton(
                 onPressed: () {
                   Get.back();
@@ -47,13 +48,13 @@ class SearchDialog extends GetView {
           children: [
             const SearchFilterWidget(),
             SizedBox(
-              height: 60,
+              height: 62,
               child: GFTextFieldPill(
                 controller: searchCtrl.searchCtrl,
                 editingbordercolor: context.theme.hintColor,
                 idlebordercolor: Colors.black,
                 borderwidth: 1,
-                hintText: 'search word',
+                hintText: 'searchword'.tr,
                 iconPrefix: const Icon(Icons.search),
                 style: const TextStyle(
                   fontSize: 19,
@@ -64,10 +65,10 @@ class SearchDialog extends GetView {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: GFButtonBadge(
                 onPressed: () {
-                  Get.toNamed('/search');
+                  Get.toNamed(Routes.searchPage);
                 },
                 elevation: 10,
-                text: 'Search Now',
+                text: 'searchnow'.tr,
                 textStyle: const TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,

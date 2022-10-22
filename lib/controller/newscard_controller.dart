@@ -6,6 +6,17 @@ import 'package:tell_me_news/model/news_model.dart';
 import '../repository/bookmarks_shared.dart';
 
 class NewsCardController {
+  removeBookmark(NewsModel model) async {
+    Bookmarks().removeFromBookmark(model.id).then((value) {
+      Get.snackbar(
+        'Info',
+        'Done! bookmark has been removed',
+        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    });
+  }
+
   addOrRemoveBookmark(NewsModel model) async {
     if (!await Bookmarks().contains(model.id!)) {
       Bookmarks().addBookmark(model).then((value) {

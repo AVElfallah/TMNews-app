@@ -30,10 +30,15 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
     });
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: context.theme.backgroundColor,
         title: Obx(
           () => Text(
             pageCtrl.title.value,
-            style: GoogleFonts.aldrich(),
+            style: GoogleFonts.aldrich(
+              color: context.isDarkMode ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         bottom: PreferredSize(
@@ -59,7 +64,7 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
                           );
                         },
                         fullWidthButton: true,
-                        text: 'singup',
+                        text: 'singup'.tr,
                         borderSide: const BorderSide(color: Colors.black),
                         textStyle: const TextStyle(
                           fontSize: 17,
@@ -83,7 +88,7 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
                           );
                         },
                         fullWidthButton: true,
-                        text: 'login',
+                        text: 'login'.tr,
                         color: pageCtrl.loginButtonColor.value,
                         borderSide: const BorderSide(color: Colors.black),
                         textStyle: const TextStyle(
@@ -104,21 +109,25 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             size: 30,
+            color: context.isDarkMode ? Colors.white : Colors.black,
           ),
         ),
       ),
       body: GetBuilder<LoginRegistrationController>(
         tag: 'loginReg_ctrl',
         builder: (_) {
-          return PageView(
-            controller: pageCtrl.pageController,
-            children: const [
-              LoginWidget(),
-              SingupWidget(),
-            ],
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: PageView(
+              controller: pageCtrl.pageController,
+              children: const [
+                LoginWidget(),
+                SingupWidget(),
+              ],
+            ),
           );
         },
       ),

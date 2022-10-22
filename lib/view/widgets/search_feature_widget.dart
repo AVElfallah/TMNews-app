@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
@@ -19,10 +20,10 @@ class SearchFeatureWidget extends StatelessWidget {
           color: Colors.yellow,
           size: 30,
         ),
-        title: const Text(
-          'Search features',
+        title: Text(
+          'searchfeatures'.tr,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),

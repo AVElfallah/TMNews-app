@@ -4,16 +4,22 @@ import 'package:get/get.dart';
 import '../repository/bookmarks_shared.dart';
 
 class BookmarkController extends GetxController {
-  Rx<Future<List<Map<dynamic, dynamic>>>> getBookmarks =
-      Bookmarks().getBookmarks().obs;
+  Rx<Future<List<dynamic>>> getBookmarks = Bookmarks().getBookmarks().obs;
 
   removeFromBookmarks(String id) async {
-    await Bookmarks().removeFromBookmark(id);
+    if (!await Bookmarks().contains(id)) {
+      Bookmarks().removeFromBookmark(id).then((value) {
+        getBookmarks.value = Bookmarks().getBookmarks();
+      });
+      printInfo(info: 'e');
+    } else {
+      printError(info: 'erorr');
+    }
   }
 
   clearBookmarks() async {
     var i = await Bookmarks().clearAllBookmarks();
-    if (i == 0) {
+    if (i == 1) {
       Get.snackbar(
         'Info',
         'All Bookmarks has been deleted',

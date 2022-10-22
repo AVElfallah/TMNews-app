@@ -1,21 +1,26 @@
 class DateTimeFormat {
   DateTimeFormat(this.dateTime);
-  final DateTime dateTime;
+  final String dateTime;
   String getTime() {
-    return '${(dateTime.hour % 12).toString().padLeft(
+    DateTime date = DateTime.parse(dateTime);
+    return '${(date.hour % 12).toString().padLeft(
           2,
           '0',
-        )}:${(dateTime.minute).toString().padLeft(
+        )}:${(date.minute).toString().padLeft(
           2,
           '0',
-        )}${dateTime.hour > 12 ? " PM" : " AM"}';
+        )}${date.hour > 12 ? " PM" : " AM"}';
   }
 
   String getDate() {
-    return '${dateTime.day}-${dateTime.month}-${dateTime.year}';
+    DateTime date = DateTime.parse(dateTime);
+
+    return '${date.day}-${date.month}-${date.year}';
   }
 
   String getAPIDate() {
-    return '${dateTime.year}-${dateTime.month}-${dateTime.day}';
+    DateTime date = DateTime.parse(dateTime);
+
+    return '${date.year}-${date.month}-${date.day}';
   }
 }

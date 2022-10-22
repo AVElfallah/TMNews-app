@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/search_controller.dart';
 
 import '../../model/news_model.dart';
@@ -39,7 +40,7 @@ class NewsSearchPage extends StatelessWidget {
                 showImage: true,
                 image: Image(
                   image: AssetImage(
-                    'assets/images/error.png',
+                    Assets.appError,
                   ),
                 ),
               );
@@ -53,7 +54,7 @@ class NewsSearchPage extends StatelessWidget {
             showImage: true,
             image: Image(
               image: AssetImage(
-                'assets/images/error.png',
+                Assets.appError,
               ),
             ),
           );

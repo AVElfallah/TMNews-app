@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "373075424845",
+    "project_id": "tell-me-news",
+    "storage_bucket": "tell-me-news.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373075424845:android:fbe57699ad2adab37e4e04",
+        "android_client_info": {
+          "package_name": "com.example.tell_me_news"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373075424845-t5sosjjqv7p1a94bsq12nd9e71uegtbh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3XWf8IKV_YzOrHubzzbaTnYq0TuHc7BY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373075424845-t5sosjjqv7p1a94bsq12nd9e71uegtbh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "373075424845-3k03uka1bqeke7omg6vrtvs8s72ul6nn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tellMeNews"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

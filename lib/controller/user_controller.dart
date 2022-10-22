@@ -5,14 +5,14 @@ import '../model/app_user.dart';
 
 class UserController extends GetxController {
   @override
-  bool get initialized {
-    SharedAppSettings().getAppUserAccount().then((value) {
+  void onInit() {
+    print('int');
+    _shared.getAppUserAccount().then((value) {
       userPreferences = value;
       update();
       return true;
     });
-
-    return super.initialized;
+    super.onInit();
   }
 
   final _shared = SharedAppSettings();

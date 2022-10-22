@@ -5,7 +5,8 @@ import '../model/news_model.dart';
 
 Future<GetStorage> _getOpenBookmarksBox() async {
   var dir = await getApplicationDocumentsDirectory();
-  return GetStorage('bookmarks', dir.path);
+  var getSt = GetStorage('bookmarks', dir.path)..initStorage;
+  return getSt;
 }
 
 class Bookmarks {
@@ -24,10 +25,11 @@ class Bookmarks {
     );
   }
 
-  removeFromBookmark(String? id) async {
-    await _getOpenBookmarksBox().then((box) async {
-      box.remove(id!);
-    });
+  Future removeFromBookmark(String? id) async {
+    final bookmarkBox = await _getOpenBookmarksBox();
+    await bookmarkBox.remove(id!).then((value) {});
+
+    return bookmarkBox.hasData(id);
   }
 
   Future<int> clearAllBookmarks() async {
@@ -37,10 +39,11 @@ class Bookmarks {
     return 1;
   }
 
-  Future<List<Map>> getBookmarks() async {
+  Future<List> getBookmarks() async {
     var bookmarkBox = await _getOpenBookmarksBox();
-    var val = bookmarkBox.getValues<List<Map>>();
 
-    return val;
+    var val = bookmarkBox.getValues<Iterable>();
+
+    return val.toList();
   }
 }

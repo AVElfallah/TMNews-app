@@ -12,7 +12,6 @@ class CurrencyConverterController extends GetxController {
     var user = Get.find<UserController>(tag: 'user_ctrl').userPreferences;
     currency1st = user!.mainCurrency!;
     currency2nd = user.secondCurrency!;
-    print(currency1st);
     update();
     return super.initialized;
   }

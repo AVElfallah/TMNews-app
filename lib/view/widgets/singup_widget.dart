@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tell_me_news/config/app_route.dart';
+import 'package:tell_me_news/controller/login_registaration_controller.dart';
 
 class SingupWidget extends StatefulWidget {
   const SingupWidget({Key? key}) : super(key: key);
@@ -13,9 +17,8 @@ class _SingupWidgetState extends State<SingupWidget> {
   final passowordTXTCtrl = TextEditingController();
 
   final userTXTCtrl = TextEditingController();
-
-  bool isHidenPassword = true;
-
+  final emailCtrl = TextEditingController();
+  var controller = Get.find<LoginRegistrationController>(tag: 'loginReg_ctrl');
   @override
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
@@ -23,10 +26,6 @@ class _SingupWidgetState extends State<SingupWidget> {
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final constraints = BoxConstraints(
-      maxWidth: width * .6,
-      minWidth: width * .6,
-    );
 
     return SingleChildScrollView(
       child: Column(
@@ -34,204 +33,138 @@ class _SingupWidgetState extends State<SingupWidget> {
         children: [
           Padding(
             padding: const EdgeInsets.all(10),
-            child: Hero(
-              tag: 'welcome_text',
-              child: Text(
-                'Singup be one of us',
-                style: GoogleFonts.righteous(fontSize: 18),
-              ),
+            child: Text(
+              'singup_slogan'.tr,
+              style: GoogleFonts.righteous(fontSize: 18),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Center(
-              child: Hero(
-                tag: 'container_body',
-                child: Container(
-                  width: width * .8,
-                  height: height * .8,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 1.4),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        /*
-                              *User Name
-                              */
+              child: Container(
+                width: width * .8,
+                height: height * .65,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1.4),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      /*
+                            *User Name
+                            */
 
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
+                      _TFBox(
+                        tfCtrl: userTXTCtrl,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'enter your user name';
+                          }
+                          return null;
+                        },
+                        hintText: 'inp_name'.tr,
+                        boxText: 'user_name'.tr,
+                        icon: Icons.person,
+                        keyboardType: TextInputType.name,
+                      ),
+                      //End UserName//
+
+                      //Email Start//
+                      _TFBox(
+                        tfCtrl: emailCtrl,
+                        validator: (email) {
+                          if (!email!.contains('@gmail.com') &&
+                              !email.contains('@yahoo.com')) {
+                            return 'not supported email';
+                          }
+
+                          return null;
+                        },
+                        hintText: 'inp_email'.tr,
+                        boxText: 'email'.tr,
+                        icon: Icons.mail_outline,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+
+                      //Email End//
+
+                      //Password Start//
+
+                      _TFBox(
+                        tfCtrl: passowordTXTCtrl,
+                        validator: (val) {
+                          if (val != passowordTXTCtrl.text) {
+                            return 'password is not matching';
+                          }
+                          if (passowordTXTCtrl.text == '') {
+                            return 'empty field not allowed';
+                          }
+                          return null;
+                        },
+                        hintText: 'inp_password'.tr,
+                        boxText: 'password'.tr,
+                        icon: Icons.lock,
+                        isPassword: true,
+                        keyboardType: TextInputType.visiblePassword,
+                      ),
+
+                      //Password End//
+
+                      _TFBox(
+                        tfCtrl: TextEditingController(),
+                        validator: (val) {
+                          if (val != passowordTXTCtrl.text) {
+                            return 'password is not matching';
+                          }
+                          if (passowordTXTCtrl.text == '') {
+                            return 'empty field not allowed';
+                          }
+                          return null;
+                        },
+                        hintText: 'inp_password'.tr,
+                        boxText: 'confirmation'.tr,
+                        icon: Icons.lock,
+                        isPassword: true,
+                        keyboardType: TextInputType.visiblePassword,
+                      ),
+
+                      ///
+                      TextButton.icon(
+                        onPressed: () async {
+                          Get.showOverlay(
+                            asyncFunction: () async {
+                              if (_formKey.currentState!.validate()) {
+                                var back = await controller.singupController
+                                    .createNewUser(
+                                  userTXTCtrl.text,
+                                  emailCtrl.text,
+                                  passowordTXTCtrl.text,
+                                );
+                                if (back) {
+                                  Get.offAllNamed(Routes.emailActivisonPage);
+                                }
                               }
-                              return null;
                             },
-                            style: const TextStyle(fontSize: 18),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              constraints: constraints,
-                              contentPadding: const EdgeInsets.all(10),
-                              hintText: 'Input your user name',
-                              label: Text(
-                                'User Name',
-                                style: GoogleFonts.righteous(fontSize: 20),
-                              ),
-                              floatingLabelAlignment:
-                                  FloatingLabelAlignment.center,
-                              prefixIcon: const Icon(Icons.person),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue.shade800,
-                                ),
-                              ),
+                            loadingWidget: const GFLoader(
+                              size: GFSize.LARGE,
+                              type: GFLoaderType.square,
                             ),
-                          ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.input,
+                          size: 34,
                         ),
-                        //End UserName//
-
-                        //Email Start//
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: userTXTCtrl,
-                            style: const TextStyle(fontSize: 18),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(10),
-                              constraints: constraints,
-                              hintText: 'Input your E-mail',
-                              label: Text(
-                                'Email',
-                                style: GoogleFonts.righteous(fontSize: 20),
-                              ),
-                              floatingLabelAlignment:
-                                  FloatingLabelAlignment.center,
-                              prefixIcon: const Icon(Icons.mail_outline),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(
-                                  color: Colors.lightBlue.shade800,
-                                ),
-                              ),
-                            ),
-                          ),
+                        label: Text(
+                          'singup'.tr,
+                          style: GoogleFonts.righteous(fontSize: 18),
                         ),
-                        //Email End//
-
-                        //Password Start//
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: StatefulBuilder(
-                            builder:
-                                (BuildContext context, StateSetter setState) {
-                              return TextFormField(
-                                controller: passowordTXTCtrl,
-                                obscureText: isHidenPassword,
-                                style: const TextStyle(fontSize: 18),
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  constraints: constraints,
-                                  hintText: 'Input your password',
-                                  label: Text(
-                                    'Password',
-                                    style: GoogleFonts.righteous(fontSize: 20),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(10),
-                                  prefixIcon: const Icon(Icons.lock),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() =>
-                                          isHidenPassword = !isHidenPassword);
-                                    },
-                                    tooltip: 'unhide password',
-                                    icon: const Icon(
-                                      Icons.visibility,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-                                      color: Colors.lightBlue.shade800,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        //Password End//
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: StatefulBuilder(
-                            builder:
-                                (BuildContext context, StateSetter setState) {
-                              return TextFormField(
-                                obscureText: isHidenPassword,
-                                style: const TextStyle(fontSize: 18),
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(10),
-                                  constraints: constraints,
-                                  hintText: 'Input your password',
-                                  label: Text(
-                                    'Confirmation',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.visible,
-                                    style: GoogleFonts.righteous(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  prefixIcon: const Icon(Icons.lock),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(
-                                        () =>
-                                            isHidenPassword = !isHidenPassword,
-                                      );
-                                    },
-                                    tooltip: 'unhide password',
-                                    icon: const Icon(
-                                      Icons.visibility,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(
-                                      color: Colors.lightBlue.shade800,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {}
-                          },
-                          icon: const Icon(
-                            Icons.input,
-                            size: 34,
-                          ),
-                          label: Text(
-                            'Singup',
-                            style: GoogleFonts.righteous(fontSize: 18),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -239,6 +172,80 @@ class _SingupWidgetState extends State<SingupWidget> {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class _TFBox extends StatelessWidget {
+  _TFBox({
+    required this.tfCtrl,
+    this.validator,
+    this.hintText,
+    this.boxText,
+    this.icon,
+    this.keyboardType,
+    this.isPassword = false,
+  });
+  final TextEditingController? tfCtrl;
+  final String? hintText, boxText;
+  final IconData? icon;
+  final bool? isPassword;
+  String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    var isHidenPassword = isPassword;
+
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+        return TextFormField(
+          controller: tfCtrl,
+          validator: validator,
+          obscureText: isHidenPassword!,
+          style: const TextStyle(fontSize: 18),
+          keyboardType: keyboardType,
+          decoration: InputDecoration(
+            constraints: BoxConstraints(
+              maxWidth: width * .72,
+              minWidth: width * .72,
+            ),
+            contentPadding: const EdgeInsets.all(10),
+            hintText: hintText,
+            label: Text(
+              boxText!,
+              style: GoogleFonts.righteous(fontSize: 20),
+            ),
+            floatingLabelAlignment: FloatingLabelAlignment.center,
+            prefixIcon: Icon(icon),
+            suffixIcon: Visibility(
+              visible: isPassword!,
+              child: IconButton(
+                onPressed: () {
+                  setState(
+                    () => isHidenPassword = !isHidenPassword!,
+                  );
+                },
+                tooltip: 'unhide password',
+                icon: const Icon(
+                  Icons.visibility,
+                ),
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                30,
+              ),
+              borderSide: BorderSide(
+                color: Colors.lightBlue.shade800,
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
