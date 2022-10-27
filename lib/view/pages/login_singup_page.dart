@@ -24,10 +24,7 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
   @override
   Widget build(BuildContext context) {
     final mqSize = MediaQuery.of(context).size;
-    pageCtrl.pageController.addListener(() {
-      pageCtrl.changePageTitle();
-      pageCtrl.changePageColor();
-    });
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -48,60 +45,54 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
           ),
           child: SizedBox(
             width: mqSize.width * .78,
-            child: Obx(() {
-              return Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: SizedBox(
-                      width: mqSize.width * .44,
-                      child: GFButton(
-                        onPressed: () {
-                          pageCtrl.pageController.animateToPage(
-                            1,
-                            duration: const Duration(milliseconds: 1300),
-                            curve: Curves.bounceInOut,
-                          );
-                        },
-                        fullWidthButton: true,
-                        text: 'singup'.tr,
-                        borderSide: const BorderSide(color: Colors.black),
-                        textStyle: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+            child: Obx(
+              () {
+                return Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: SizedBox(
+                        width: mqSize.width * .44,
+                        child: GFButton(
+                          onPressed: () {
+                            pageCtrl.goToSingupPage();
+                          },
+                          fullWidthButton: true,
+                          text: 'singup'.tr,
+                          borderSide: const BorderSide(color: Colors.black),
+                          textStyle: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          color: pageCtrl.singupButtonColor.value,
+                          shape: GFButtonShape.pills,
                         ),
-                        color: pageCtrl.singupButtonColor.value,
-                        shape: GFButtonShape.pills,
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                      width: mqSize.width * .44,
-                      child: GFButton(
-                        onPressed: () {
-                          pageCtrl.pageController.animateToPage(
-                            0,
-                            duration: const Duration(milliseconds: 1300),
-                            curve: Curves.bounceInOut,
-                          );
-                        },
-                        fullWidthButton: true,
-                        text: 'login'.tr,
-                        color: pageCtrl.loginButtonColor.value,
-                        borderSide: const BorderSide(color: Colors.black),
-                        textStyle: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: mqSize.width * .44,
+                        child: GFButton(
+                          onPressed: () {
+                            pageCtrl.goToLoginPage();
+                          },
+                          fullWidthButton: true,
+                          text: 'login'.tr,
+                          color: pageCtrl.loginButtonColor.value,
+                          borderSide: const BorderSide(color: Colors.black),
+                          textStyle: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          shape: GFButtonShape.pills,
                         ),
-                        shape: GFButtonShape.pills,
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
+                  ],
+                );
+              },
+            ),
           ),
         ),
         centerTitle: true,

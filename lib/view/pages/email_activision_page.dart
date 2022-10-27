@@ -36,6 +36,7 @@ class _EmailActivisonPageState extends State<EmailActivisonPage>
         ),
         leading: IconButton(
           onPressed: () async {
+            FirebaseAuth.instance.currentUser!.reload();
             var xUser = await FirebaseAuth.instance.authStateChanges().first;
             xUser!.emailVerified;
 
@@ -90,8 +91,8 @@ class _EmailActivisonPageState extends State<EmailActivisonPage>
               label: const Text('Resend activation'),
             ),
             ElevatedButton.icon(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
                 Get.offAllNamed(Routes.splashPage);
               },
               icon: const Icon(Icons.logout),

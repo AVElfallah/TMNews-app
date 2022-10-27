@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import 'package:getwidget/getwidget.dart';
 import 'package:tell_me_news/controller/currency_converter_controller.dart';
-import 'package:tell_me_news/repository/app_preferences.dart';
 import 'package:tell_me_news/repository/currencies.dart';
 
 class CurrencyNewsPage extends GetView {
@@ -13,7 +12,7 @@ class CurrencyNewsPage extends GetView {
   Widget build(BuildContext context) {
     final currencyCtrl = Get.put(
       CurrencyConverterController(),
-    )..initialized;
+    );
 
     final currenciesAsItem = Currencies()
         .getAllCodes()
@@ -33,15 +32,6 @@ class CurrencyNewsPage extends GetView {
       appBar: AppBar(
         title: Text('currencyconverter'.tr),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Get.changeThemeMode(
-              context.isDarkMode ? ThemeMode.light : ThemeMode.dark,
-            );
-            SharedAppSettings().changeThemeMode(context.isDarkMode);
-          },
-          icon: Icon(context.isDarkMode ? Icons.sunny : Icons.dark_mode),
-        ),
       ),
       body: Stack(
         children: [

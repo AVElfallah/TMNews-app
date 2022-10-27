@@ -22,7 +22,7 @@ class NewsSearchRepository {
 
   final SupportedLanguage? supportedLanguage;
   Future<List<NewsModel>> getNews() async {
-    const apiKey = '2afa55caa3924c4080b5f3985e019145';
+    const apiKey = 'e6de098a14e742b1a9069799dc1c0af6';
     final getSearchIn = searchIn!.isEmpty
         ? ''
         : '&searchIn=${searchIn!.map((e) => e.name).join(',')}';

@@ -1,64 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:tell_me_news/config/assets.dart';
-import 'package:tell_me_news/controller/search_controller.dart';
 
-import '../../model/news_model.dart';
-import '../widgets/news_card_widget.dart';
+import '../../config/app_route.dart';
+import '../../controller/search_controller.dart';
+import '../widgets/search_filter_widget.dart';
+import '../widgets/search_futures.dart';
 
 class NewsSearchPage extends StatelessWidget {
   const NewsSearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.find<SearchController>(tag: 'search');
+    var searchCtrl = Get.put<SearchController>(
+      SearchController(),
+      tag: 'search',
+    );
+    var mq = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search Result'),
+        title: Text(
+          'searchbox'.tr,
+          style: TextStyle(
+            color: context.theme.colorScheme.onBackground,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: context.theme.colorScheme.background,
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: context.theme.colorScheme.onBackground,
+          ),
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size(double.infinity, mq.height * .05),
+          child: const SearchFilterWidget(),
+        ),
       ),
-      body: FutureBuilder(
-        future: ctrl.searchForNews(),
-        builder: ((context, AsyncSnapshot<List<NewsModel>> snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data!.isNotEmpty) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return NewsCardWidget.fromModel(
-                    snapshot.data![index],
-                  );
-                },
-              );
-            } else {
-              return const GFCard(
-                elevation: 40,
-                title: GFListTile(
-                  titleText: 'There are no matching search words',
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextField(
+              controller: searchCtrl.searchCtrl,
+              style: const TextStyle(
+                fontSize: 19,
+              ),
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(
+                  10,
                 ),
-                showImage: true,
-                image: Image(
-                  image: AssetImage(
-                    Assets.appError,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    30,
                   ),
                 ),
-              );
-            }
-          }
-          return const GFCard(
-            elevation: 40,
-            title: GFListTile(
-              titleText: 'There are no matching search words',
-            ),
-            showImage: true,
-            image: Image(
-              image: AssetImage(
-                Assets.appError,
+                hintText: 'searchword'.tr,
+                prefixIcon: const Icon(Icons.search),
               ),
             ),
-          );
-        }),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: GFButtonBadge(
+              onPressed: () {
+                Get.toNamed(Routes.searchResultPage);
+              },
+              elevation: 10,
+              text: 'searchnow'.tr,
+              textStyle: const TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: MediaQuery.of(context).viewInsets.bottom == 0,
+            maintainAnimation: true,
+            maintainState: true,
+            child: const SearchFeatures(),
+          )
+        ],
       ),
     );
   }

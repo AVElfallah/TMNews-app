@@ -17,10 +17,11 @@ class GetNews {
   final SupportedLanguage language;
 
   Future<List<NewsModel>> getNews() async {
-    const apiKey = '2afa55caa3924c4080b5f3985e019145';
-    final getCountry = country.name == 'ind' ? 'in' : country.name;
+    const apiKey = 'e6de098a14e742b1a9069799dc1c0af6';
+    final getCountry = country.name.substring(0, 2);
     final getLanguage = language.name;
     final getCategory = category.name;
+
     final String newsRequest =
         'https://newsapi.org/v2/top-headlines?country=$getCountry&language=$getLanguage&apiKey=$apiKey&category=$getCategory';
 

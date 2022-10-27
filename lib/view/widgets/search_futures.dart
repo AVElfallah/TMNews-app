@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'search_feature_widget.dart';
+import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:tell_me_news/config/assets.dart';
 
 class SearchFeatures extends StatelessWidget {
   const SearchFeatures({Key? key}) : super(key: key);
@@ -8,25 +9,62 @@ class SearchFeatures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
+      children: [
         SearchFeatureWidget(
-          featureTitle:
-              'You can specify the search by title or the entire article',
-          featureImage: AssetImage('assets/images/search.png'),
+          featureTitle: 'search1'.tr,
+          featureImage: const AssetImage(Assets.search),
         ),
         SearchFeatureWidget(
-          featureTitle: 'You can specify the article language',
-          featureImage: AssetImage('assets/images/languages.png'),
+          featureTitle: 'search2'.tr,
+          featureImage: const AssetImage(Assets.languages),
         ),
         SearchFeatureWidget(
-          featureTitle: 'Searching for articles around the world',
-          featureImage: AssetImage('assets/images/countries.png'),
+          featureTitle: 'search3'.tr,
+          featureImage: const AssetImage(Assets.countries),
         ),
         SearchFeatureWidget(
-          featureTitle: 'You can search articles by date from and to',
-          featureImage: AssetImage('assets/images/time.png'),
+          featureTitle: 'search4'.tr,
+          featureImage: const AssetImage(Assets.time),
         ),
       ],
+    );
+  }
+}
+
+class SearchFeatureWidget extends StatelessWidget {
+  const SearchFeatureWidget({Key? key, this.featureTitle, this.featureImage})
+      : super(key: key);
+
+  final String? featureTitle;
+  final ImageProvider? featureImage;
+
+  @override
+  Widget build(BuildContext context) {
+    return GFCard(
+      elevation: 50,
+      title: GFListTile(
+        icon: const Icon(
+          Icons.star,
+          color: Colors.yellow,
+          size: 30,
+        ),
+        title: Text(
+          'searchfeatures'.tr,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        description: Text(
+          featureTitle!,
+          style: const TextStyle(fontSize: 16),
+        ),
+      ),
+      showImage: true,
+      image: Image(
+        image: featureImage!,
+      ),
     );
   }
 }

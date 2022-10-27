@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../repository/app_preferences.dart';
 
@@ -6,7 +7,7 @@ import '../model/app_user.dart';
 class UserController extends GetxController {
   @override
   void onInit() {
-    print('int');
+    debugPrint('int');
     _shared.getAppUserAccount().then((value) {
       userPreferences = value;
       update();
@@ -16,13 +17,6 @@ class UserController extends GetxController {
   }
 
   final _shared = SharedAppSettings();
-
-  @override
-  void refresh() async {
-    userPreferences = await SharedAppSettings().getAppUserAccount();
-    printInfo(info: 'refresh');
-    super.refresh();
-  }
 
   AppUserPreferences? userPreferences;
 }

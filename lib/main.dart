@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ import 'repository/app_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedAppSettings().intialGuestAccount();
+  await SharedAppSettings().initialiGuestAccount();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -28,14 +29,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userCtrl = Get.find<UserController>(tag: 'user_ctrl');
+
     const scheme = FlexScheme.bigStone;
     Get.changeThemeMode(
       userCtrl.userPreferences!.isDarkMode! ? ThemeMode.dark : ThemeMode.light,
     );
+    String initialRoute() {
+      var xUser = FirebaseAuth.instance.currentUser;
+      if (xUser != null) {
+        if (!xUser.emailVerified && !xUser.isAnonymous) {
+          return Routes.emailActivisonPage;
+        } else {
+          return Routes.homePage;
+        }
+      }
+      return Routes.splashPage;
+    }
+
     return GetMaterialApp(
       title: 'Tell Me News',
       translations: Languages(),
-      locale: const Locale('ar', ''),
+      locale: Locale(userCtrl.userPreferences!.appLanguage!),
       debugShowCheckedModeBanner: false,
       theme: FlexThemeData.light(
         scheme: scheme,
@@ -46,9 +60,7 @@ class MyApp extends StatelessWidget {
         appBarElevation: 2,
       ),
       getPages: GetRoutes().allRoutes,
-      initialRoute: userCtrl.userPreferences!.isLogin!
-          ? Routes.homePage
-          : Routes.splashPage,
+      initialRoute: initialRoute(),
     );
   }
 }

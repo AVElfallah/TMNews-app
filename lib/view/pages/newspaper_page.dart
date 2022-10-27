@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:getwidget/getwidget.dart';
+import 'package:tell_me_news/config/app_route.dart';
 import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/app_settings_controller.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
 
 import 'package:tell_me_news/view/widgets/news_filter_widget.dart';
-import 'package:tell_me_news/view/widgets/search_dialog_widget.dart';
 
 import '../../model/news_model.dart';
 import '../widgets/categories_widget.dart';
@@ -36,7 +36,8 @@ class NewsPaperPage extends StatelessWidget {
                     Icons.search,
                   ),
                   onPressed: () {
-                    SearchDialog.show(context);
+                    //  SearchDialog.show(context);
+                    Get.toNamed(Routes.searchPage);
                   },
                 ),
                 const NewsFilterWidget()

@@ -49,6 +49,13 @@ class Languages extends Translations {
           'content': 'Content',
           'from': 'From',
           'to': 'To',
+          'search1':
+              'You can specify the search by title or the entire article',
+          'search2': 'You can specify the article language',
+          'search3': 'Searching for articles around the world',
+          'search4': 'You can search articles by date from and to',
+          'searchmsg': 'There are no matching search words',
+          'searchresult': 'Search Result',
         },
         'ar': {
           'welcome': 'مرحباً في اخر الاخبار',
@@ -96,6 +103,13 @@ class Languages extends Translations {
           'content': 'المحتوي',
           'from': 'من',
           'to': 'الي',
+          'search1':
+              'يمكنك تخصيص البحث الي البحث بعنوان المقالة او في كامل المقالة او الوصف',
+          'search2': 'يمكنك تخصيص لغة المقالة',
+          'search3': 'البحث يشمل مقالات من انحاء العالم',
+          'search4': 'يمكنك البحث بالنطاق الزمني من و الي',
+          'searchmsg': 'لا توجد نتائج للبحث حاول بكلمات اخري',
+          'searchresult': 'نتائج البحث',
         }
       };
 }

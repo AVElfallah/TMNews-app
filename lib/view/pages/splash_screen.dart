@@ -66,9 +66,14 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ),
                       TextButton.icon(
-                        onPressed: () {
-                          debugPrint(FirebaseAuth.instance.toString());
-                          Get.offAndToNamed(Routes.homePage);
+                        onPressed: () async {
+                          var crid =
+                              await FirebaseAuth.instance.signInAnonymously();
+                          await crid.user!.updateDisplayName('Guest');
+                          if (crid.user!.isAnonymous) {
+                            debugPrint(crid.toString());
+                            Get.offAndToNamed(Routes.homePage);
+                          }
                         },
                         icon: const Icon(Icons.public),
                         label: Text(

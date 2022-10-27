@@ -43,7 +43,7 @@ class SharedAppSettings {
     }
   }
 
-  intialGuestAccount() async {
+  initialiGuestAccount() async {
     var box = await _getOpenUserBox();
 
     var app = AppUserPreferences(
@@ -77,7 +77,7 @@ class SharedAppSettings {
 
   changeAppLanguage(String lang) async {
     var guestBox = await _getOpenUserBox();
-    guestBox.write("newsLanguage", lang);
+    guestBox.write('appLanguage', lang);
   }
 
   changeMainCurrency(String mC) async {

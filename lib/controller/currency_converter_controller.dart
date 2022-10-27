@@ -8,12 +8,12 @@ import 'package:tell_me_news/repository/currencies.dart';
 
 class CurrencyConverterController extends GetxController {
   @override
-  bool get initialized {
+  void onInit() {
+    super.onInit();
     var user = Get.find<UserController>(tag: 'user_ctrl').userPreferences;
     currency1st = user!.mainCurrency!;
     currency2nd = user.secondCurrency!;
     update();
-    return super.initialized;
   }
 
   String currency1st = 'USD';
