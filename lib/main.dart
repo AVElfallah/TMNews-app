@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:tell_me_news/config/app_route.dart';
 
 import 'package:tell_me_news/controller/user_controller.dart';
@@ -14,6 +15,8 @@ import 'repository/app_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting();
+
   await SharedAppSettings().initialiGuestAccount();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

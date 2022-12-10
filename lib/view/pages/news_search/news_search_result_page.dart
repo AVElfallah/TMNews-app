@@ -4,8 +4,9 @@ import 'package:getwidget/getwidget.dart';
 import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/search_controller.dart';
 
-import '../../model/news_model.dart';
-import '../widgets/news_card_widget.dart';
+import '../../../model/news_model.dart';
+
+import '../../widgets/news_card_widget.dart';
 
 class NewsSearchResultPage extends StatelessWidget {
   const NewsSearchResultPage({Key? key}) : super(key: key);

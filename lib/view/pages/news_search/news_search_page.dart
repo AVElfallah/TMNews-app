@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 
-import '../../config/app_route.dart';
-import '../../controller/search_controller.dart';
-import '../widgets/search_filter_widget.dart';
-import '../widgets/search_futures.dart';
+import '../../../config/app_route.dart';
+import '../../../controller/search_controller.dart';
+import '../../widgets/search_filter_widget.dart';
+import '../../widgets/search_futures.dart';
 
 class NewsSearchPage extends StatelessWidget {
   const NewsSearchPage({Key? key}) : super(key: key);

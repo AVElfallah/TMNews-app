@@ -1,3 +1,5 @@
+import 'package:tell_me_news/model/news_enums.dart';
+
 class Assets {
   static const appLogo = 'assets/images/tmlogo.png';
   static const appError = 'assets/images/error.png';
@@ -7,4 +9,10 @@ class Assets {
   static const languages = 'assets/images/languages.png';
   static const countries = 'assets/images/countries.png';
   static const time = 'assets/images/time.png';
+}
+
+class CountryFlag {
+  String getFlag(SupportedCountry supportedCountry) {
+    return 'assets/images/countries/${supportedCountry.name.substring(0, 2)}.png';
+  }
 }

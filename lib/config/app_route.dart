@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../view/pages/bookmark_page.dart';
-import '../view/pages/email_activision_page.dart';
-import '../view/pages/login_singup_page.dart';
+
 import '../view/pages/news_main_page.dart';
-import '../view/pages/news_search_page.dart';
-import '../view/pages/news_search_result_page.dart';
+
+import '../view/pages/news_search/news_search_page.dart';
+import '../view/pages/news_search/news_search_result_page.dart';
 import '../view/pages/news_web_view.dart';
-import '../view/pages/splash_screen.dart';
+import '../view/pages/user_pages/email_activision_page.dart';
+import '../view/pages/user_pages/login_singup_page.dart';
+import '../view/pages/user_pages/splash_screen.dart';
 
 class Routes {
   static const String splashPage = "/splash";

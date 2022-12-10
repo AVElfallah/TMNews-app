@@ -10,7 +10,7 @@ import 'package:tell_me_news/controller/newscard_controller.dart';
 
 import 'package:tell_me_news/model/news_model.dart';
 
-import '../../repository/date_time.dart';
+import 'package:intl/intl.dart';
 
 class NewsCardWidget extends StatelessWidget {
   const NewsCardWidget({
@@ -47,6 +47,8 @@ class NewsCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var date = DateFormat('EEEE d-M-y  hh:mm a', Get.locale!.languageCode)
+        .format(DateTime.parse(dateTime));
     var ctrl = NewsCardController();
     return GFCard(
       shape: RoundedRectangleBorder(
@@ -55,9 +57,7 @@ class NewsCardWidget extends StatelessWidget {
       elevation: 30,
       showImage: true,
       image: Image(
-        image: (imageUrl != '')
-            ? CachedNetworkImageProvider(imageUrl)
-            : Image.asset(Assets.placeholder).image,
+        image: CachedNetworkImageProvider(imageUrl),
         fit: BoxFit.contain,
         height: MediaQuery.of(context).size.height * .29,
         errorBuilder: ((context, error, stackTrace) {
@@ -85,11 +85,7 @@ class NewsCardWidget extends StatelessWidget {
           ),
         ),
         description: Text(
-          "${DateTimeFormat(
-            dateTime,
-          ).getDate()}    ${DateTimeFormat(
-            dateTime,
-          ).getTime()}",
+          date,
         ),
       ),
       content: Text(

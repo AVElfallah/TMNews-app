@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,17 +15,7 @@ class CurrencyNewsPage extends GetView {
       CurrencyConverterController(),
     );
 
-    final currenciesAsItem = Currencies()
-        .getAllCodes()
-        .map(
-          (item) => DropdownMenuItem(
-            value: item,
-            child: Text(
-              item,
-            ),
-          ),
-        )
-        .toList();
+    final currenciesAsItem = Currencies().getAllCodes();
     final mq = MediaQuery.of(
       context,
     ).size;
@@ -39,7 +30,7 @@ class CurrencyNewsPage extends GetView {
             top: mq.height * .045,
             left: 0,
             child: SizedBox(
-              height: mq.height * .25,
+              height: mq.height * .26,
               width: mq.width,
               child: GFCard(
                 elevation: 20,
@@ -49,26 +40,31 @@ class CurrencyNewsPage extends GetView {
                   ),
                 ),
                 title: GFListTile(
-                  title: StatefulBuilder(
-                    builder: (context, setState) {
-                      return Center(
-                        child: SizedBox(
-                          width: mq.width * .35,
-                          child: DropdownButton(
-                            isExpanded: true,
-                            elevation: 20,
-                            value: currencyCtrl.currency1st,
-                            items: currenciesAsItem,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            onChanged: (String? value) {
-                              currencyCtrl.changeMainCurrency(value!);
-
-                              setState(() {});
-                            },
+                  title: Center(
+                    child: SizedBox(
+                      width: mq.width * .35,
+                      child: DropdownSearch<String>(
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          textAlign: TextAlign.center,
+                          dropdownSearchDecoration: InputDecoration(
+                            constraints:
+                                BoxConstraints(maxHeight: mq.height * .065),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
-                      );
-                    },
+                        items: currenciesAsItem,
+                        onChanged: ((value) {
+                          currencyCtrl.changeMainCurrency(value!);
+                        }),
+                        selectedItem: currencyCtrl.currency1st,
+                        popupProps: const PopupProps.dialog(
+                          showSearchBox: true,
+                          showSelectedItems: true,
+                        ),
+                      ),
+                    ),
                   ),
                   subTitle: GFTextFieldRounded(
                     controller: currencyCtrl.textCtrl1,
@@ -87,7 +83,7 @@ class CurrencyNewsPage extends GetView {
             top: mq.height * .29,
             left: 0,
             child: SizedBox(
-              height: mq.height * .25,
+              height: mq.height * .26,
               width: mq.width,
               child: GFCard(
                 elevation: 20,
@@ -97,26 +93,31 @@ class CurrencyNewsPage extends GetView {
                   ),
                 ),
                 title: GFListTile(
-                  title: StatefulBuilder(
-                    builder: (context, setState) {
-                      return Center(
-                        child: SizedBox(
-                          width: mq.width * .35,
-                          child: DropdownButton(
-                            isExpanded: true,
-                            elevation: 20,
-                            value: currencyCtrl.currency2nd,
-                            items: currenciesAsItem,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            onChanged: (String? value) {
-                              currencyCtrl.changeSecondCurrency(value!);
-
-                              setState(() {});
-                            },
+                  title: Center(
+                    child: SizedBox(
+                      width: mq.width * .35,
+                      child: DropdownSearch<String>(
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          textAlign: TextAlign.center,
+                          dropdownSearchDecoration: InputDecoration(
+                            constraints:
+                                BoxConstraints(maxHeight: mq.height * .065),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
-                      );
-                    },
+                        items: currenciesAsItem,
+                        onChanged: ((value) {
+                          currencyCtrl.changeSecondCurrency(value!);
+                        }),
+                        selectedItem: currencyCtrl.currency2nd,
+                        popupProps: const PopupProps.dialog(
+                          showSearchBox: true,
+                          showSelectedItems: true,
+                        ),
+                      ),
+                    ),
                   ),
                   subTitle: GFTextFieldRounded(
                     controller: currencyCtrl.textCtrl2,

@@ -4,8 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:tell_me_news/model/news_enums.dart';
 import 'package:tell_me_news/model/search_enums.dart';
 
+import '../config/app_config.dart';
 import '../model/news_model.dart';
-import 'date_time.dart';
+import 'package:intl/intl.dart';
 
 class NewsSearchRepository {
   NewsSearchRepository({
@@ -22,17 +23,16 @@ class NewsSearchRepository {
 
   final SupportedLanguage? supportedLanguage;
   Future<List<NewsModel>> getNews() async {
-    const apiKey = 'e6de098a14e742b1a9069799dc1c0af6';
+    var fromStr = DateFormat('y-M-d').format(dateTimeFrom!).toString();
+    var toStr = DateFormat('y-M-d').format(dateTimeTo!).toString();
     final getSearchIn = searchIn!.isEmpty
         ? ''
         : '&searchIn=${searchIn!.map((e) => e.name).join(',')}';
     final String getLanguage = '&language=${supportedLanguage!.name}';
-    final String getFromDate =
-        '&from=${DateTimeFormat(dateTimeFrom!.toIso8601String()).getAPIDate()}';
-    final String getToDate =
-        '&to=${DateTimeFormat(dateTimeTo!.toIso8601String()).getAPIDate()}';
+    final String getFromDate = '&from=$fromStr';
+    final String getToDate = '&to=$toStr';
     final String newsRequest =
-        'https://newsapi.org/v2/everything?q=$searchString&apiKey=$apiKey$getSearchIn$getLanguage$getFromDate$getToDate';
+        'https://newsapi.org/v2/everything?q=$searchString&apiKey=$newsAPI$getSearchIn$getLanguage$getFromDate$getToDate';
 
     try {
       var response = await Dio().get(newsRequest);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
-import 'package:tell_me_news/repository/country_flag.dart';
 
+import '../../config/assets.dart';
 import '../../model/news_enums.dart';
 
 class NewsFilterWidget extends StatelessWidget {
