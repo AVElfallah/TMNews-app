@@ -2,7 +2,7 @@
     package="com.example.tell_me_news" android:installLocation="preferExternal">
     
    <application
-        android:label="tell_me_news"
+        android:label="Tell ME News"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

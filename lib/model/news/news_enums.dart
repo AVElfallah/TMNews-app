@@ -1,7 +1,7 @@
 enum SupportedCategories {
+  general,
   business,
   entertainment,
-  general,
   health,
   science,
   sports,

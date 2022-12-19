@@ -16,11 +16,6 @@ class _SingupWidgetState extends State<SingupWidget> {
       .singupController;
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
-
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -42,8 +37,8 @@ class _SingupWidgetState extends State<SingupWidget> {
             ),
             child: Center(
               child: Container(
-                width: width * .8,
-                height: height * .65,
+                width: context.width * .8,
+                height: context.height * .65,
                 padding: const EdgeInsets.all(
                   10,
                 ),

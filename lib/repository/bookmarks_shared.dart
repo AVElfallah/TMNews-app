@@ -1,7 +1,7 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../model/news_model.dart';
+import '../model/news/news_model.dart';
 
 Future<GetStorage> _getOpenBookmarksBox() async {
   var dir = await getApplicationDocumentsDirectory();
@@ -16,7 +16,7 @@ class Bookmarks {
     return box.hasData(id);
   }
 
-  Future addBookmark(NewsModel newsModel) async {
+  Future addBookmark(NewsReportModel newsModel) async {
     var bookmarkBox = await _getOpenBookmarksBox();
 
     await bookmarkBox.write(

@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tell_me_news/controller/bookmark_controller.dart';
-import 'package:tell_me_news/model/news_model.dart';
 import 'package:tell_me_news/view/widgets/news_card_widget.dart';
+
+import '../../model/news/news_model.dart';
 
 class BookmarkPage extends GetView<BookmarkController> {
   const BookmarkPage({Key? key}) : super(key: key);
@@ -39,7 +40,8 @@ class BookmarkPage extends GetView<BookmarkController> {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: ((context, index) {
-                    var newsModel = NewsModel.fromJson(snapshot.data![index]);
+                    var newsModel =
+                        NewsReportModel.fromJson(snapshot.data![index]);
 
                     return Padding(
                       padding: const EdgeInsets.all(8.0),

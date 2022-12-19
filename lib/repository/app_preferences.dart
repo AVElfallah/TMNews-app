@@ -1,7 +1,8 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tell_me_news/model/app_user.dart';
-import 'package:tell_me_news/model/news_enums.dart';
+
+import '../model/news/news_enums.dart';
 
 enum User {
   guest,
@@ -18,6 +19,9 @@ Future<GetStorage> _getOpenUserBox() async {
 }
 
 class SharedAppSettings {
+  SharedAppSettings._();
+  static final SharedAppSettings _instance = SharedAppSettings._();
+  static SharedAppSettings get instance => _instance;
 //guestAccount
   // ignore: body_might_complete_normally_nullable
   Future<AppUserPreferences?> getAppUserAccount() async {

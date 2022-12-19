@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
-import 'package:tell_me_news/model/news_enums.dart';
-
 import '../config/app_config.dart';
-import '../model/news_model.dart';
+import '../model/news/news_enums.dart';
+import '../model/news/news_model.dart';
 
 class GetNews {
   GetNews({
@@ -17,7 +16,7 @@ class GetNews {
   final SupportedCountry country;
   final SupportedLanguage language;
 
-  Future<List<NewsModel>> getNews() async {
+  Future<List<NewsReportModel>> getNews() async {
     final getCountry = country.name.substring(0, 2);
     final getLanguage = language.name;
     final getCategory = category.name;
@@ -33,7 +32,7 @@ class GetNews {
 
       return (res["articles"] as List)
           .map(
-            (e) => NewsModel.fromJson(e),
+            (e) => NewsReportModel.fromJson(e),
           )
           .toList();
     } catch (e) {

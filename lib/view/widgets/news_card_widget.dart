@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/button/gf_button_bar.dart';
@@ -8,9 +9,9 @@ import 'package:tell_me_news/config/app_route.dart';
 import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/controller/newscard_controller.dart';
 
-import 'package:tell_me_news/model/news_model.dart';
-
 import 'package:intl/intl.dart';
+
+import '../../model/news/news_model.dart';
 
 class NewsCardWidget extends StatelessWidget {
   const NewsCardWidget({
@@ -32,7 +33,8 @@ class NewsCardWidget extends StatelessWidget {
   final String newsUrl;
   final String? id;
   final bool? isBookmark;
-  factory NewsCardWidget.fromModel(NewsModel model, {isBookmarked = false}) {
+  factory NewsCardWidget.fromModel(NewsReportModel model,
+      {isBookmarked = false}) {
     return NewsCardWidget(
       imageUrl: model.urlToImage ?? '',
       title: model.title ?? 'no title',
@@ -103,25 +105,30 @@ class NewsCardWidget extends StatelessWidget {
       buttonBar: GFButtonBar(
         children: [
           Visibility(
-            visible: !isBookmark!,
-            child: TextButton.icon(
-              onPressed: () {
-                ctrl.addOrRemoveBookmark(
-                  NewsModel(
-                    title: title,
-                    dateTime: dateTime,
-                    url: newsUrl,
-                    sourceName: newsProvider,
-                    urlToImage: imageUrl,
-                    id: id,
-                    description: description,
-                  ),
-                );
-              },
-              label: Text('bookmark'.tr),
-              icon: const Icon(
-                Icons.bookmark,
-                size: 28,
+            //chck if user is regsterd or not
+            visible: !FirebaseAuth.instance.currentUser!.isAnonymous,
+            child: Visibility(
+              //check if is bookMarked or not
+              visible: !isBookmark!,
+              child: TextButton.icon(
+                onPressed: () {
+                  ctrl.addOrRemoveBookmark(
+                    NewsReportModel(
+                      title: title,
+                      dateTime: dateTime,
+                      url: newsUrl,
+                      sourceName: newsProvider,
+                      urlToImage: imageUrl,
+                      id: id,
+                      description: description,
+                    ),
+                  );
+                },
+                label: Text('bookmark'.tr),
+                icon: const Icon(
+                  Icons.bookmark,
+                  size: 28,
+                ),
               ),
             ),
           ),

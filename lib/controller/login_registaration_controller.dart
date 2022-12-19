@@ -97,19 +97,12 @@ class LoginWidgetController extends GetxController {
             userTXTCtrl.text,
             passowordTXTCtrl.text,
           );
-          var user = await FirebaseAuth.instance.userChanges().first;
+
           if (loginBack) {
-            if (user!.emailVerified) {
-              Get.offAllNamed(
-                Routes.homePage,
-              );
-              return loginBack;
-            } else {
-              Get.offAllNamed(
-                Routes.emailActivisonPage,
-              );
-              return loginBack;
-            }
+            Get.offAllNamed(
+              Routes.splashPage,
+            );
+            return loginBack;
           } else {
             return false;
           }

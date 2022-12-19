@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tell_me_news/model/news_enums.dart';
+import 'package:tell_me_news/model/news/news_enums.dart';
 import 'package:tell_me_news/model/search_enums.dart';
 import 'package:tell_me_news/repository/news_search_repository.dart';
 
-import '../model/news_model.dart';
+import '../model/news/news_model.dart';
+import 'dart:core';
 
 class SearchController extends GetxController {
   TextEditingController searchCtrl = TextEditingController();
 
-  DateTime from = DateTime.now();
-  DateTime to = DateTime.now();
+  Rx<DateTime> from = DateTime.now().obs;
+  Rx<DateTime> to = DateTime.now().obs;
   SupportedLanguage supportedLanguage = SupportedLanguage.ar;
 
   final searchIn = <SearchIn>[].obs;
@@ -32,8 +33,8 @@ class SearchController extends GetxController {
   }
 
   void changefrom(DateTime dateTime) {
-    if (to.isAfter(dateTime) || to.isAtSameMomentAs(dateTime)) {
-      from = dateTime;
+    if (to.value.isAfter(dateTime) || to.value.isAtSameMomentAs(dateTime)) {
+      from.value = dateTime;
     } else {
       Get.snackbar(
         'Date Erorr',
@@ -48,8 +49,8 @@ class SearchController extends GetxController {
   }
 
   void changeto(DateTime dateTime) {
-    if (dateTime.isAfter(from) || dateTime.isAtSameMomentAs(from)) {
-      to = dateTime;
+    if (dateTime.isAfter(from.value) || dateTime.isAtSameMomentAs(from.value)) {
+      to.value = dateTime;
     } else {
       Get.snackbar(
         'Date Erorr',
@@ -60,20 +61,19 @@ class SearchController extends GetxController {
         backgroundColor: Colors.red.shade900,
       );
     }
-    printInfo(info: 'Change fromTime to $to');
+    printInfo(info: 'Change toTime to $to');
   }
 
-  Future<List<NewsModel>> searchForNews() async {
+  Future<List<NewsReportModel>> searchForNews() async {
     if (searchCtrl.value.text != '') {
       return await NewsSearchRepository(
         searchIn: searchIn,
         supportedLanguage: supportedLanguage,
-        dateTimeTo: to,
-        dateTimeFrom: from,
+        dateTimeTo: to.value,
+        dateTimeFrom: from.value,
         searchString: searchCtrl.text,
       ).getNews();
-    } else {
-      return <NewsModel>[];
     }
+    return <NewsReportModel>[];
   }
 }

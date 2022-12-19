@@ -16,7 +16,6 @@ class NewsSearchPage extends StatelessWidget {
       SearchController(),
       tag: 'search',
     );
-    var mq = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -38,8 +37,16 @@ class NewsSearchPage extends StatelessWidget {
           ),
         ),
         bottom: PreferredSize(
-          preferredSize: Size(double.infinity, mq.height * .05),
-          child: const SearchFilterWidget(),
+          preferredSize: Size(double.infinity, context.height * .05),
+          child: SearchFilterWidget(
+            searchIn: searchCtrl.searchIn,
+            changeSearchIn: searchCtrl.changeSearchIn,
+            changeLanguage: searchCtrl.changeLanguage,
+            changefrom: searchCtrl.changefrom,
+            changeto: searchCtrl.changeto,
+            from: searchCtrl.from,
+            to: searchCtrl.to,
+          ),
         ),
       ),
       body: ListView(
@@ -68,8 +75,13 @@ class NewsSearchPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: GFButtonBadge(
-              onPressed: () {
-                Get.toNamed(Routes.searchResultPage);
+              onPressed: () async {
+                var newsModel = await searchCtrl.searchForNews();
+
+                Get.toNamed(
+                  Routes.searchResultPage,
+                  arguments: {'model': newsModel},
+                );
               },
               elevation: 10,
               text: 'searchnow'.tr,

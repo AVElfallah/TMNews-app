@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tell_me_news/controller/search_controller.dart';
 import 'package:tell_me_news/model/search_enums.dart';
 
-import '../../model/news_enums.dart';
+import '../../model/news/news_enums.dart';
 
 class SearchFilterWidget extends StatelessWidget {
-  const SearchFilterWidget({Key? key}) : super(key: key);
-
+  const SearchFilterWidget({
+    Key? key,
+    required this.changeSearchIn,
+    required this.searchIn,
+    required this.changeLanguage,
+    required this.from,
+    required this.to,
+    required this.changefrom,
+    required this.changeto,
+  }) : super(key: key);
+  final void Function(SearchIn) changeSearchIn;
+  final RxList<SearchIn> searchIn;
+  final void Function(SupportedLanguage) changeLanguage;
+  final void Function(DateTime) changeto, changefrom;
+  final Rx<DateTime> from, to;
   @override
   Widget build(BuildContext context) {
-    var mqsize = MediaQuery.of(context).size;
     var lang = SupportedLanguage.values
         .map(
           (lan) => PopupMenuItem<SupportedLanguage>(
@@ -22,7 +33,6 @@ class SearchFilterWidget extends StatelessWidget {
         )
         .toList();
 
-    var ctrl = Get.find<SearchController>(tag: 'search');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Row(
@@ -47,12 +57,11 @@ class SearchFilterWidget extends StatelessWidget {
                       child: Obx(
                         () => SwitchListTile(
                           onChanged: (val) {
-                            ctrl.changeSearchIn(SearchIn.title);
+                            changeSearchIn.call(SearchIn.title);
                             setState(() {});
                           },
                           title: Text('title'.tr),
-                          value:
-                              ctrl.searchIn.contains(SearchIn.title).obs.value,
+                          value: searchIn.contains(SearchIn.title).obs.value,
                         ),
                       ),
                     ),
@@ -60,7 +69,8 @@ class SearchFilterWidget extends StatelessWidget {
                       child: Obx(
                         () => SwitchListTile(
                           onChanged: (val) {
-                            ctrl.changeSearchIn(SearchIn.description);
+                            changeSearchIn.call(SearchIn.description);
+                            //  ctrl.changeSearchIn(SearchIn.description);
                             setState(() {});
                           },
                           title: Text(
@@ -69,10 +79,8 @@ class SearchFilterWidget extends StatelessWidget {
                             overflow: TextOverflow.visible,
                             softWrap: false,
                           ),
-                          value: ctrl.searchIn
-                              .contains(SearchIn.description)
-                              .obs
-                              .value,
+                          value:
+                              searchIn.contains(SearchIn.description).obs.value,
                         ),
                       ),
                     ),
@@ -80,14 +88,11 @@ class SearchFilterWidget extends StatelessWidget {
                       child: Obx(
                         () => SwitchListTile(
                           onChanged: (val) {
-                            ctrl.changeSearchIn(SearchIn.content);
+                            changeSearchIn.call(SearchIn.content);
                             setState(() {});
                           },
                           title: Text('content'.tr),
-                          value: ctrl.searchIn
-                              .contains(SearchIn.content)
-                              .obs
-                              .value,
+                          value: searchIn.contains(SearchIn.content).obs.value,
                         ),
                       ),
                     ),
@@ -99,8 +104,8 @@ class SearchFilterWidget extends StatelessWidget {
           //selection language
           PopupMenuButton<SupportedLanguage>(
             constraints: BoxConstraints.expand(
-              width: mqsize.width * .35,
-              height: mqsize.height * .35,
+              width: context.width * .35,
+              height: context.height * .35,
             ),
             position: PopupMenuPosition.under,
             shape: RoundedRectangleBorder(
@@ -114,7 +119,7 @@ class SearchFilterWidget extends StatelessWidget {
               size: 35,
             ),
             onSelected: (supported) {
-              ctrl.changeLanguage(supported);
+              changeLanguage.call(supported);
             },
           ),
 
@@ -132,11 +137,11 @@ class SearchFilterWidget extends StatelessWidget {
                       var now = DateTime.now();
                       showDatePicker(
                         context: context,
-                        initialDate: ctrl.from,
+                        initialDate: from.value,
                         firstDate: DateTime(now.year - 1),
                         lastDate: now,
                       ).then(
-                        (from) => ctrl.changefrom(from!),
+                        (from) => changefrom.call(from!),
                       );
                     },
                     label: Text('from'.tr),
@@ -148,11 +153,11 @@ class SearchFilterWidget extends StatelessWidget {
                     onPressed: () {
                       showDatePicker(
                         context: context,
-                        initialDate: ctrl.to,
+                        initialDate: to.value,
                         firstDate: DateTime(1999),
                         lastDate: DateTime.now(),
                       ).then(
-                        (to) => ctrl.changeto(to!),
+                        (to) => changeto.call(to!),
                       );
                     },
                     label: Text('to'.tr),

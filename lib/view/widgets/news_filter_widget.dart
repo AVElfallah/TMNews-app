@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tell_me_news/controller/newspaper_controller.dart';
 
 import '../../config/assets.dart';
-import '../../model/news_enums.dart';
+import '../../model/news/news_enums.dart';
 
 class NewsFilterWidget extends StatelessWidget {
   const NewsFilterWidget({Key? key}) : super(key: key);

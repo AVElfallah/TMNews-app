@@ -1,14 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:tell_me_news/config/app_route.dart';
 
-import 'package:tell_me_news/controller/user_controller.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tell_me_news/localization/localization.dart';
+import 'package:tell_me_news/services/app_settings.dart';
 import 'firebase_options.dart';
 
 import 'repository/app_preferences.dart';
@@ -16,12 +14,12 @@ import 'repository/app_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting();
-
-  await SharedAppSettings().initialiGuestAccount();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Get.put<UserController>(UserController(), tag: 'user_ctrl');
+  await SharedAppSettings.instance.initialiGuestAccount();
+  await Get.putAsync<AppSettingsService>(() async => AppSettingsService(),
+      tag: 'settings_service');
 
   runApp(const MyApp());
 }
@@ -31,29 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userCtrl = Get.find<UserController>(tag: 'user_ctrl');
+    var userCtrl = Get.find<AppSettingsService>(tag: 'settings_service');
 
     const scheme = FlexScheme.bigStone;
-    Get.changeThemeMode(
-      userCtrl.userPreferences!.isDarkMode! ? ThemeMode.dark : ThemeMode.light,
-    );
-    String initialRoute() {
-      var xUser = FirebaseAuth.instance.currentUser;
-      if (xUser != null) {
-        if (!xUser.emailVerified && !xUser.isAnonymous) {
-          return Routes.emailActivisonPage;
-        } else {
-          return Routes.homePage;
-        }
-      }
-      return Routes.splashPage;
-    }
 
     return GetMaterialApp(
       title: 'Tell Me News',
       translations: Languages(),
-      locale: Locale(userCtrl.userPreferences!.appLanguage!),
+      locale: Locale(userCtrl.userPreferences?.appLanguage! ?? 'ar'),
       debugShowCheckedModeBanner: false,
+      themeMode: context.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       theme: FlexThemeData.light(
         scheme: scheme,
         appBarElevation: 0.5,
@@ -63,7 +48,7 @@ class MyApp extends StatelessWidget {
         appBarElevation: 2,
       ),
       getPages: GetRoutes().allRoutes,
-      initialRoute: initialRoute(),
+      initialRoute: Routes.splashPage,
     );
   }
 }

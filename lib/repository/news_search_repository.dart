@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:tell_me_news/model/news_enums.dart';
 import 'package:tell_me_news/model/search_enums.dart';
 
 import '../config/app_config.dart';
-import '../model/news_model.dart';
 import 'package:intl/intl.dart';
+
+import '../model/news/news_enums.dart';
+import '../model/news/news_model.dart';
 
 class NewsSearchRepository {
   NewsSearchRepository({
@@ -22,7 +23,7 @@ class NewsSearchRepository {
   final String? searchString;
 
   final SupportedLanguage? supportedLanguage;
-  Future<List<NewsModel>> getNews() async {
+  Future<List<NewsReportModel>> getNews() async {
     var fromStr = DateFormat('y-M-d').format(dateTimeFrom!).toString();
     var toStr = DateFormat('y-M-d').format(dateTimeTo!).toString();
     final getSearchIn = searchIn!.isEmpty
@@ -39,7 +40,7 @@ class NewsSearchRepository {
       var res = const JsonDecoder().convert(response.toString());
       if (res['status'] == 'ok') {
         return (res["articles"] as List)
-            .map((e) => NewsModel.fromJson(e))
+            .map((e) => NewsReportModel.fromJson(e))
             .toList();
       } else {
         return [];

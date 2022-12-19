@@ -6,8 +6,8 @@ import 'package:getwidget/getwidget.dart';
 import 'package:tell_me_news/controller/currency_converter_controller.dart';
 import 'package:tell_me_news/repository/currencies.dart';
 
-class CurrencyNewsPage extends GetView {
-  const CurrencyNewsPage({Key? key}) : super(key: key);
+class CurrencyNewsScreen extends GetView {
+  const CurrencyNewsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +16,21 @@ class CurrencyNewsPage extends GetView {
     );
 
     final currenciesAsItem = Currencies().getAllCodes();
-    final mq = MediaQuery.of(
-      context,
-    ).size;
+
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
         title: Text('currencyconverter'.tr),
         centerTitle: true,
       ),
       body: Stack(
         children: [
           Positioned(
-            top: mq.height * .045,
+            top: context.height * .045,
             left: 0,
             child: SizedBox(
-              height: mq.height * .26,
-              width: mq.width,
+              height: context.height * .26,
+              width: context.width,
               child: GFCard(
                 elevation: 20,
                 shape: const RoundedRectangleBorder(
@@ -42,13 +41,13 @@ class CurrencyNewsPage extends GetView {
                 title: GFListTile(
                   title: Center(
                     child: SizedBox(
-                      width: mq.width * .35,
+                      width: context.width * .35,
                       child: DropdownSearch<String>(
                         dropdownDecoratorProps: DropDownDecoratorProps(
                           textAlign: TextAlign.center,
                           dropdownSearchDecoration: InputDecoration(
-                            constraints:
-                                BoxConstraints(maxHeight: mq.height * .065),
+                            constraints: BoxConstraints(
+                                maxHeight: context.height * .065),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -80,11 +79,11 @@ class CurrencyNewsPage extends GetView {
             ),
           ),
           Positioned(
-            top: mq.height * .29,
+            top: context.height * .29,
             left: 0,
             child: SizedBox(
-              height: mq.height * .26,
-              width: mq.width,
+              height: context.height * .26,
+              width: context.width,
               child: GFCard(
                 elevation: 20,
                 shape: const RoundedRectangleBorder(
@@ -95,13 +94,13 @@ class CurrencyNewsPage extends GetView {
                 title: GFListTile(
                   title: Center(
                     child: SizedBox(
-                      width: mq.width * .35,
+                      width: context.width * .35,
                       child: DropdownSearch<String>(
                         dropdownDecoratorProps: DropDownDecoratorProps(
                           textAlign: TextAlign.center,
                           dropdownSearchDecoration: InputDecoration(
-                            constraints:
-                                BoxConstraints(maxHeight: mq.height * .065),
+                            constraints: BoxConstraints(
+                                maxHeight: context.height * .065),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -134,15 +133,15 @@ class CurrencyNewsPage extends GetView {
             ),
           ),
           Positioned(
-            top: mq.height * .265,
-            left: mq.width * .20,
+            top: context.height * .265,
+            left: context.width * .20,
             child: GFButton(
               type: (context.isDarkMode)
                   ? GFButtonType.outline2x
                   : GFButtonType.solid,
               shape: GFButtonShape.pills,
               padding: EdgeInsets.symmetric(
-                horizontal: mq.width * .15,
+                horizontal: context.width * .15,
               ),
               size: GFSize.LARGE,
               icon: Icon(

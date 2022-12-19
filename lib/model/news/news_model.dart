@@ -1,4 +1,4 @@
-class NewsModel {
+class NewsReportModel {
   final String? id;
   final String? title;
   final String? description;
@@ -7,7 +7,7 @@ class NewsModel {
   final String? sourceName;
   final String? dateTime;
 
-  NewsModel({
+  NewsReportModel({
     this.title,
     this.dateTime,
     this.description,
@@ -31,9 +31,9 @@ class NewsModel {
     };
   }
 
-  factory NewsModel.fromJson(Map jsonObject) {
+  factory NewsReportModel.fromJson(Map jsonObject) {
     var id = jsonObject['source']['name'] + jsonObject['publishedAt'];
-    return NewsModel(
+    return NewsReportModel(
       id: jsonObject['id'] ?? id,
       title: jsonObject['title'],
       url: jsonObject['url'],

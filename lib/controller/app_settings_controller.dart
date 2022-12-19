@@ -1,50 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/config.dart';
 import 'package:get/get.dart';
 
 import '../repository/app_preferences.dart';
 
-class AppSettingsController extends GetxController {
-  ZoomDrawerController zoomDrawerController = ZoomDrawerController();
+class HomeController extends GetxController {
   PageController pageController = PageController();
+  @override
+  void onInit() {
+    pageController.addListener(() {
+      changePage(pageController.page!.toInt());
+    });
+    super.onInit();
+  }
 
   RxInt page = 0.obs;
-  changeToEnglishLanguage() {
+  void changeToEnglishLanguage() {
     Get.updateLocale(
       const Locale('en'),
     );
     FirebaseAuth.instance.setLanguageCode('en');
-    SharedAppSettings().changeAppLanguage('en');
+    SharedAppSettings.instance.changeAppLanguage('en');
   }
 
-  changeToArabicLanguage() {
+  void changeToArabicLanguage() {
     Get.updateLocale(const Locale('ar'));
     FirebaseAuth.instance.setLanguageCode('ar');
-    SharedAppSettings().changeAppLanguage('ar');
+    SharedAppSettings.instance.changeAppLanguage('ar');
   }
 
-  changeTheme(bool val) {
+  void changeTheme(bool val) {
     Get.changeThemeMode(
       val ? ThemeMode.dark : ThemeMode.light,
     );
-    SharedAppSettings().changeThemeMode(val);
+    SharedAppSettings.instance.changeThemeMode(val);
   }
 
-  changePage(int newPage) {
+  void changePage(int newPage) {
     page.value = newPage;
   }
 
-  goToPage(int newPage) {
+  void goToPage(int newPage) {
     pageController.animateToPage(
       newPage,
       duration: const Duration(milliseconds: 1200),
       curve: Curves.easeInExpo,
     );
-  }
-
-  open() {
-    zoomDrawerController.open!();
-    update();
   }
 }

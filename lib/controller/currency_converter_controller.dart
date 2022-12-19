@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:getwidget/getwidget.dart';
-import 'package:tell_me_news/controller/user_controller.dart';
 import 'package:tell_me_news/repository/app_preferences.dart';
 import 'package:tell_me_news/repository/currencies.dart';
+import 'package:tell_me_news/services/app_settings.dart';
 
 class CurrencyConverterController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    var user = Get.find<UserController>(tag: 'user_ctrl').userPreferences;
+    var user =
+        Get.find<AppSettingsService>(tag: 'settings_service').userPreferences;
     currency1st = user!.mainCurrency!;
     currency2nd = user.secondCurrency!;
     update();
@@ -23,13 +24,13 @@ class CurrencyConverterController extends GetxController {
 
   changeMainCurrency(String val) {
     currency1st = val;
-    SharedAppSettings().changeMainCurrency(val);
+    SharedAppSettings.instance.changeMainCurrency(val);
     update();
   }
 
   changeSecondCurrency(String val) {
     currency2nd = val;
-    SharedAppSettings().changeSecondCurrency(val);
+    SharedAppSettings.instance.changeSecondCurrency(val);
     update();
   }
 

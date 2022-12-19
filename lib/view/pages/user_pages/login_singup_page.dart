@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tell_me_news/controller/login_registaration_controller.dart';
-import 'package:tell_me_news/view/widgets/login_widget.dart';
-import 'package:tell_me_news/view/widgets/singup_widget.dart';
+
+import 'login_page.dart';
+import 'singup_page.dart';
 
 class UserLoginRegistrationPage extends StatefulWidget {
   const UserLoginRegistrationPage({Key? key}) : super(key: key);
@@ -115,7 +116,7 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
             child: PageView(
               controller: pageCtrl.pageController,
               children: const [
-                LoginWidget(),
+                LoginPage(),
                 SingupWidget(),
               ],
             ),

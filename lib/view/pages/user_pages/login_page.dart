@@ -3,23 +3,20 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tell_me_news/controller/login_registaration_controller.dart';
 
-class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginWidget> createState() => _LoginWidgetState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginPageState extends State<LoginPage> {
   final controller = Get.find<LoginRegistrationController>(
     tag: 'loginReg_ctrl',
   ).loginController;
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,8 +38,8 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
             child: Center(
               child: Container(
-                width: width * .8,
-                height: height * .4,
+                width: context.width * .8,
+                height: context.height * .4,
                 padding: const EdgeInsets.all(
                   10,
                 ),
@@ -65,7 +62,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         icon: Icons.person,
                         hintText: 'inp_email'.tr,
                         boxText: 'email'.tr,
-                        keyboardType: TextInputType.visiblePassword,
+                        keyboardType: TextInputType.emailAddress,
                         isPassword: false,
                         validator: controller.userValidator,
                       ),

@@ -1,156 +1,65 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tell_me_news/controller/newspaper_controller.dart';
-import 'package:tell_me_news/model/news_enums.dart';
+
+import '../../model/news/news_enums.dart';
 
 class CategoriesWidget extends StatelessWidget {
-  const CategoriesWidget({Key? key}) : super(key: key);
+  const CategoriesWidget(
+      {Key? key, required this.changeCategory, required this.category})
+      : super(key: key);
 
+  final void Function(SupportedCategories cat) changeCategory;
+  final Rx<SupportedCategories> category;
+  final supCat = SupportedCategories.values;
   @override
   Widget build(BuildContext context) {
-    final textStyle =
-        GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 15);
+    final textStyle = GoogleFonts.cairo(
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+    );
+    final icons = [
+      Icons.public,
+      Icons.work,
+      CupertinoIcons.tv_music_note_fill,
+      CupertinoIcons.checkmark_shield_fill,
+      CupertinoIcons.lab_flask,
+      CupertinoIcons.sportscourt,
+      Icons.laptop,
+    ];
 
-    return GetX<NewspaperController>(
-      tag: 'newspaper',
-      builder: (ctrl) => SizedBox(
-        height: MediaQuery.of(context).size.height * .075,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.general);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.public),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.general
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text(
-                    'general'.tr,
-                    style: textStyle,
-                  ),
+    return SizedBox(
+      height: context.height * .075,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: supCat.length,
+        itemBuilder: ((context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(
+              8.0,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                changeCategory.call(
+                  supCat[index],
+                );
+              },
+              child: Chip(
+                avatar: Icon(
+                  icons[index],
+                ),
+                backgroundColor: category.value == supCat[index]
+                    ? Colors.green.shade800
+                    : context.theme.chipTheme.backgroundColor,
+                label: Text(
+                  supCat[index].name.tr,
+                  style: textStyle,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.business);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.work),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.business
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text(
-                    'business'.tr,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.entertainment);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.sports_esports),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.entertainment
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text(
-                    'entertainment'.tr,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.health);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.monitor_heart),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.health
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text(
-                    'health'.tr,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.science);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.science),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.science
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text('science'.tr, style: textStyle),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.sports);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.sports_soccer),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.sports
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text(
-                    'sports'.tr,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  ctrl.changeCategory(SupportedCategories.technology);
-                },
-                child: Chip(
-                  avatar: const Icon(Icons.laptop_mac),
-                  backgroundColor:
-                      ctrl.category.value == SupportedCategories.technology
-                          ? Colors.green.shade800
-                          : context.theme.chipTheme.backgroundColor,
-                  label: Text(
-                    'technology'.tr,
-                    style: textStyle,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          );
+        }),
       ),
     );
   }

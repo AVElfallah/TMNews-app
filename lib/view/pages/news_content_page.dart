@@ -3,34 +3,26 @@ import 'package:get/get.dart';
 
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:tell_me_news/controller/app_settings_controller.dart';
+import 'home_screens/currency_news_screen.dart';
+import 'home_screens/newspaper_screen.dart';
+import 'home_screens/sport_event_screen.dart';
 
-import 'package:tell_me_news/view/pages/Live_sport_event_page.dart';
-import 'package:tell_me_news/view/pages/currency_news_page.dart';
-
-import 'package:tell_me_news/view/pages/newspaper_page.dart';
-
-class NewsDisplayer extends StatelessWidget {
-  const NewsDisplayer({Key? key}) : super(key: key);
+class NewsContentPage extends StatelessWidget {
+  const NewsContentPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppSettingsController>(
-      tag: "appSettings",
+    return GetBuilder<HomeController>(
+      tag: 'home_ctrl',
       builder: (ctrl) {
-        //   var page = 0.obs;
-        ctrl.pageController.addListener(
-          () {
-            ctrl.changePage(ctrl.pageController.page!.toInt());
-          },
-        );
         return Scaffold(
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: ctrl.pageController,
             children: const [
-              NewsPaperPage(),
-              LiveSportsEventsPage(),
-              CurrencyNewsPage(),
+              NewsPaperScreen(),
+              SportsEventsScreen(),
+              CurrencyNewsScreen(),
             ],
           ),
           bottomNavigationBar: Obx(
@@ -59,13 +51,11 @@ class NewsDisplayer extends StatelessWidget {
                 ),
               ],
               selectedIndex: ctrl.page.value,
-              onTabChange: (value) {
-                ctrl.goToPage(value);
-              },
+              onTabChange: ctrl.goToPage,
               iconSize: 30,
               tabBorderRadius: 500,
               tabActiveBorder: Border.all(
-                color: Get.theme.primaryColor,
+                color: context.theme.primaryColor,
               ),
             ),
           ),
