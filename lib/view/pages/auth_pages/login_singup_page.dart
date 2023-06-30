@@ -29,7 +29,7 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
         title: Obx(
           () => Text(
             pageCtrl.title.value,
@@ -115,6 +115,7 @@ class _UserLoginRegistrationPageState extends State<UserLoginRegistrationPage> {
             padding: const EdgeInsets.all(8.0),
             child: PageView(
               controller: pageCtrl.pageController,
+              physics: const NeverScrollableScrollPhysics(),
               children: const [
                 LoginPage(),
                 SingupWidget(),

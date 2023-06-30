@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,15 +24,12 @@ class MessageToIsolate {
 
 class _EmailActivisonPageState extends State<EmailActivisonPage> {
   final User user = FirebaseAuth.instance.currentUser!;
-  final receivePort = ReceivePort();
-  StreamController? ctrl;
-  Timer? timer;
 
   @override
   void initState() {
     super.initState();
 
-    Future.microtask(
+    /*  Future.microtask(
       () async {
         Stream checkStream = Stream<Future<bool>>.periodic(
           const Duration(milliseconds: 2200),
@@ -53,7 +52,7 @@ class _EmailActivisonPageState extends State<EmailActivisonPage> {
           },
         );
       },
-    );
+    ); */
   }
 
   @override
@@ -63,10 +62,24 @@ class _EmailActivisonPageState extends State<EmailActivisonPage> {
 
   @override
   Widget build(BuildContext context) {
+    Isolate.spawn<User>(
+      (message) {
+        while (true) {
+          message.reload();
+          if (message.emailVerified) {
+            break;
+          }
+          sleep(const Duration(milliseconds: 500));
+          print('not verified');
+        }
+        Get.offAndToNamed(Routes.userPhotoUploader);
+      },
+      user,
+    );
     bool sender = true;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.theme.backgroundColor,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: true,
         title: const Text(

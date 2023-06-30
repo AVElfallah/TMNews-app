@@ -52,7 +52,7 @@ class NewsSearchPage extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: TextField(
               controller: searchCtrl.searchCtrl,
               style: const TextStyle(

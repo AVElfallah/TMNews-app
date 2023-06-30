@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         scheme: scheme,
         appBarElevation: 2,
       ),
-      getPages: GetRoutes().allRoutes,
+      getPages: GetRoutes.allRoutes,
       initialRoute: Routes.splashPage,
     );
   }

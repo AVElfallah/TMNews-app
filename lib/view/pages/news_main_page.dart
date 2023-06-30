@@ -26,7 +26,7 @@ class _NewsMainPageState extends State<NewsMainPage> {
   Widget build(BuildContext context) {
     return ZoomDrawer(
       controller: context.zoomController,
-      menuBackgroundColor: context.theme.backgroundColor,
+      menuBackgroundColor: context.theme.scaffoldBackgroundColor,
       borderRadius: 40.0,
       overlayBlend: BlendMode.lighten,
       showShadow: true,

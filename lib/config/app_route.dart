@@ -6,6 +6,7 @@ import 'package:tell_me_news/view/pages/user_pages/user_photo_uploader_page.dart
 
 import '../middleware/email_activison_middelware.dart';
 import '../test_page/test_page_page.dart';
+import '../view/pages/auth_pages/login_singup_page.dart';
 import '../view/pages/bookmark_page.dart';
 
 import '../view/pages/error.dart';
@@ -15,8 +16,7 @@ import '../view/pages/news_search/news_search_page.dart';
 import '../view/pages/news_search/news_search_result_page.dart';
 import '../view/pages/news_web_view.dart';
 import '../view/pages/user_pages/email_activision_page.dart';
-import '../view/pages/user_pages/login_singup_page.dart';
-import '../view/pages/user_pages/splash_screen.dart';
+import '../view/pages/splash_pages/splash_screen.dart';
 
 class Routes {
   static const String splashPage = "/splash";
@@ -34,7 +34,7 @@ class Routes {
 }
 
 class GetRoutes {
-  List<GetPage<dynamic>>? allRoutes = [
+  static List<GetPage<dynamic>>? allRoutes = [
     GetPage(
       name: Routes.splashPage,
       page: () => const SplashScreen(),
