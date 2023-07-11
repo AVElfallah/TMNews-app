@@ -14,8 +14,8 @@
 - **Firebase storage 😒**
 - **Dio 😒**
 - **Webview flutter 😒**
-<br>
-<br>
+</br>
+</br>
 [More in pubspec.ymal](pubspec.yaml)
 
 ## Features 🪶
