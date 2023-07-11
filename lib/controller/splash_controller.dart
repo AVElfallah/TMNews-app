@@ -28,4 +28,10 @@ class SplashController extends GetxController {
         },
       ));
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
+  }
 }

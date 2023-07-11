@@ -11,9 +11,12 @@ class SportCard extends StatelessWidget {
   final GameModel game;
   @override
   Widget build(BuildContext context) {
-    final formater =
-        DateFormat('EEEE , d MMM  hh:mm a', Get.locale!.languageCode)
-            .format(DateTime.parse(game.startTime!).toLocal());
+    final formater = DateFormat(
+      'EEEE , d MMM  hh:mm a',
+      Get.locale!.languageCode,
+    ).format(
+      DateTime.parse(game.startTime!).toLocal(),
+    );
 
     return Column(
       children: [

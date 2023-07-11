@@ -7,12 +7,12 @@ import 'package:tell_me_news/config/assets.dart';
 import 'package:tell_me_news/services/app_settings.dart';
 
 class DrawerWidget extends StatelessWidget {
-  DrawerWidget(
-      {Key? key,
-      required this.changeAppTheme,
-      required this.appSettings,
-      required this.languageDialog})
-      : super(key: key);
+  DrawerWidget({
+    Key? key,
+    required this.changeAppTheme,
+    required this.appSettings,
+    required this.languageDialog,
+  }) : super(key: key);
   final void Function(bool)? changeAppTheme;
   final AppSettingsService appSettings;
   final Widget languageDialog;
@@ -113,16 +113,6 @@ class DrawerWidget extends StatelessWidget {
             ),
             leading: const Icon(
               Icons.bookmarks,
-              size: 36,
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "usersettings".tr,
-              style: righteousStyle,
-            ),
-            leading: const Icon(
-              Icons.settings,
               size: 36,
             ),
           ),
