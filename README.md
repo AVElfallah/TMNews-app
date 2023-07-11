@@ -16,7 +16,8 @@
 - **Webview flutter 😒**
 </br>
 </br>
-[More in pubspec.ymal](pubspec.yaml)
+<a href="/pubspec.yaml">More in pubspec.ymal</a>
+
 
 ## Features 🪶
 
